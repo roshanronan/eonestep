@@ -35,7 +35,7 @@ function App() {
 
       <Header/>
       <Routes>
-          <Route path='/' element={<Landing/>}/>
+          <Route path='/eonestep' element={<Landing/>}/>
           <Route path='/center-login'  element={<CenterLogin/>}/>
           <Route path='/check-result' element={<VerifyCertificate/>}/>
           <Route path='/software-course' element={<SoftwareCourse/>} />

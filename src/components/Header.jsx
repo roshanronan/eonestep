@@ -7,7 +7,7 @@ const Header = () => {
       <header id="header" className="header d-flex sticky-top px-5 bg-white" >
     <div className="d-flex justify-content-between align-items-center w-100">
 
-      <Link to='/' className="logo d-flex align-items-center">
+      <Link to='/eonestep' className="logo d-flex align-items-center">
         <h1 className="sitename">EoneStep</h1>
       </Link>
     
