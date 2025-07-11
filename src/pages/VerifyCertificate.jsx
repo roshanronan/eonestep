@@ -29,7 +29,6 @@ import logo from './../assets/logo.jpg'
       <style jsx>{`
         .login-container {
           min-height: 80vh;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -38,7 +37,7 @@ import logo from './../assets/logo.jpg'
         
         .login-card {
           background: white;
-          border-radius: 20px;
+          border-radius: 8px;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
           overflow: hidden;
           width: 100%;
@@ -61,7 +60,7 @@ import logo from './../assets/logo.jpg'
         
         .form-control {
           border: 2px solid #e2e8f0;
-          border-radius: 10px;
+          border-radius: 8px;
           padding: 15px 20px;
           font-size: 1rem;
           transition: all 0.3s ease;
@@ -75,7 +74,7 @@ import logo from './../assets/logo.jpg'
         .btn-login {
           background: linear-gradient(135deg, #2c5282 0%, #2a4365 100%);
           border: none;
-          border-radius: 10px;
+          border-radius: 8px;
           padding: 15px 30px;
           font-size: 1.1rem;
           font-weight: 600;
@@ -103,7 +102,7 @@ import logo from './../assets/logo.jpg'
         }
         
         .modal-content {
-          border-radius: 10px;
+          border-radius: 8px;
           border: none;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
@@ -132,7 +131,7 @@ import logo from './../assets/logo.jpg'
         .btn-primary {
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           border: none;
-          border-radius: 10px;
+          border-radius: 8px;
           padding: 12px 30px;
           font-weight: 600;
         }
@@ -140,7 +139,7 @@ import logo from './../assets/logo.jpg'
         .btn-secondary {
           background: #e2e8f0;
           border: none;
-          border-radius: 10px;
+          border-radius: 8px;
           padding: 12px 30px;
           color: #4a5568;
           font-weight: 600;
@@ -149,7 +148,7 @@ import logo from './../assets/logo.jpg'
         @media (max-width: 768px) {
           .login-card {
             margin: 10px;
-            border-radius: 15px;
+            border-radius: 8px;
           }
           
           .logo-section,
@@ -187,7 +186,7 @@ import logo from './../assets/logo.jpg'
                       <input
                         type="text"
                         className="form-control"
-                        placeholder="Center ID"
+                        placeholder="Enrollment No"
                         name="enrollNo"
                         value={formData.enrollNo}
                         onChange={handleInputChange}
@@ -197,9 +196,9 @@ import logo from './../assets/logo.jpg'
                     
                     <div className="mb-4">
                       <input
-                        type="rollNo"
+                        type="text"
                         className="form-control"
-                        placeholder="Center Password"
+                        placeholder="Roll No"
                         name="rollNo"
                         value={formData.rollNo}
                         onChange={handleInputChange}
@@ -209,7 +208,7 @@ import logo from './../assets/logo.jpg'
                     
                     <button 
                       type="button" 
-                      className="btn btn-login mb-3"
+                      className="btn btn-primary mb-3"
                       onClick={handleCheckResult}
                     >
                       Check Result

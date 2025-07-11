@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useAuth } from '../utils/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { X, Mail } from 'lucide-react';
-import logo from './../assets/logo.jpg'
+import logo from './../assets/logo.jpg';
+
+
 
 export default function CenterLogin() {
   const [showForgotModal, setShowForgotModal] = useState(false);
@@ -9,6 +13,8 @@ export default function CenterLogin() {
     password: '',
     forgotEmail: ''
   });
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,9 +24,18 @@ export default function CenterLogin() {
     }));
   };
 
+
+
   const handleLogin = () => {
-    console.log('Login data:', { centerId: formData.centerId, password: formData.password });
-    // Handle login logic here
+    // Here you would call your API and check credentials
+    // For demo, we just set a fake user with role 'center'
+    const fakeUser = {
+      id: formData.centerId,
+      role: 'admin',
+      name: 'Center User'
+    };
+    login(fakeUser);
+    navigate('/eonestep/center-dashboard');
   };
 
   const handleForgotPassword = () => {
@@ -36,7 +51,6 @@ export default function CenterLogin() {
       <style jsx>{`
         .login-container {
           min-height: 80vh;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -45,7 +59,7 @@ export default function CenterLogin() {
         
         .login-card {
           background: white;
-          border-radius: 20px;
+          border-radius: 8px;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
           overflow: hidden;
           width: 100%;
@@ -68,7 +82,7 @@ export default function CenterLogin() {
         
         .form-control {
           border: 2px solid #e2e8f0;
-          border-radius: 10px;
+          border-radius: 8px;
           padding: 15px 20px;
           font-size: 1rem;
           transition: all 0.3s ease;
@@ -82,7 +96,7 @@ export default function CenterLogin() {
         .btn-login {
           background: linear-gradient(135deg, #2c5282 0%, #2a4365 100%);
           border: none;
-          border-radius: 10px;
+          border-radius: 8px;
           padding: 15px 30px;
           font-size: 1.1rem;
           font-weight: 600;
@@ -110,7 +124,7 @@ export default function CenterLogin() {
         }
         
         .modal-content {
-          border-radius: 10px;
+          border-radius: 8px;
           border: none;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
@@ -139,7 +153,7 @@ export default function CenterLogin() {
         .btn-primary {
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           border: none;
-          border-radius: 10px;
+          border-radius: 8px;
           padding: 12px 30px;
           font-weight: 600;
         }
@@ -147,7 +161,7 @@ export default function CenterLogin() {
         .btn-secondary {
           background: #e2e8f0;
           border: none;
-          border-radius: 10px;
+          border-radius: 8px;
           padding: 12px 30px;
           color: #4a5568;
           font-weight: 600;
@@ -156,7 +170,7 @@ export default function CenterLogin() {
         @media (max-width: 768px) {
           .login-card {
             margin: 10px;
-            border-radius: 15px;
+            border-radius: 8px;
           }
           
           .logo-section,
@@ -216,13 +230,13 @@ export default function CenterLogin() {
                     
                     <button 
                       type="button" 
-                      className="btn btn-login mb-3"
+                      className="btn btn-primary mb-3"
                       onClick={handleLogin}
                     >
                       Center Login
                     </button>
                     
-                    <div className="text-center">
+                    <div className="text-left">
                       <a 
                         href="#" 
                         className="forgot-link"

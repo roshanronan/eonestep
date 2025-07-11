@@ -156,7 +156,7 @@ export default function Footer() {
             </div>
 
             {/* Contact Info Section */}
-            <div className="col-lg-4 col-md-6 col-12 px-5">
+            <div className="col-lg-4 col-md-6 col-12 px-md-5 px-4">
               <h3>CONTACT US</h3>
               
               <div className="contact-item">

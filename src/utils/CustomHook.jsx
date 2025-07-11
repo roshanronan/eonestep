@@ -22,7 +22,6 @@ export const useHeaderEffects = () => {
     const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
 
     const mobileNavToggle = () => {
-        console.log(";;cllled")
       document.querySelector('body').classList.toggle('mobile-nav-active');
       mobileNavToggleBtn?.classList.toggle('bi-list');
       mobileNavToggleBtn?.classList.toggle('bi-x');

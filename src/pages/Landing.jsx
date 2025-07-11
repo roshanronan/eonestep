@@ -12,9 +12,12 @@ const Landing = () => {
       <Carousel/>
       <ServicesSection/>
       <AchievementSection/>
-      <About/>
-      <AffiliationProcess/>
-      <RefundAndCanel/>
+     <section id='about'>
+       <About/>
+     </section>
+     <section id='affiliation'> <AffiliationProcess/></section>
+     <section id='refundncancel'> <RefundAndCanel/></section>
+     
     </>
   )
 }

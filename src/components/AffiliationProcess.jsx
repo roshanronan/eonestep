@@ -25,7 +25,7 @@ const AffiliationProcess = () => {
 
   return (
     <div className='container d-flex flex-column my-5 py-5 justify-content-center align-items-center'>
-        <h2 className='display-5 fw-normal text-primary'>Affiliation Process For Registration</h2>
+        <h2 className='display-5 fw-normal text-primary m-0 '>Affiliation Process For Registration</h2>
         <hr />
         <p className='py-3' style={{fontSize:20}}>Computer Education Franchise, Computer Training Institute Affiliation For the first time E-ONESTEP Education launching offer to provide franchise all over India without taking any franchise fees. E-ONESTEP Education is the One of the best institution to provide computer education in India.</p>
         <p className='py-3' style={{fontSize:20}}>How to open computer education center? Computer education center provides self-employment opportunity. But Mostly People do Not know about How to open computer education Center? They have no proper information to affiliation & franchisee for new computer education center. Here, we will discuss requirements for starting up new computer education center.</p>
@@ -34,7 +34,7 @@ const AffiliationProcess = () => {
      <div className='w-100'>
      <h2 className='text-left'>Minimum requirement</h2>
         {requirments.map(point=><div className='d-flex align-items-center' style={{width:'100%'}}>
-            <p className='m-0 py-2 ps-3' style={{fontSize:20}}> 🧩 &nbsp;{point}</p>
+            <p className='m-0 py-2 ps-3' style={{fontSize:20}}> 🧱 &nbsp;{point}</p>
         </div>)}
      </div>
      <div className='w-100 mt-5'>
