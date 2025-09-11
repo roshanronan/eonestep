@@ -41,12 +41,12 @@ const ServicesSection = () => {
   ];
 
   return (
-    <div className="container-fluid d-flex align-items-center justify-content-center">
+    <div className="container-fluid d-flex align-items-center justify-content-center mt-5">
       <div className="mb-5 pb-5">
         {/* Section Header */}
         <div className="row mb-5">
           <div className="col-12 text-center">
-            <h2 className="display-5 fw-normal text-primary mb-4">Our Best Services For You</h2>
+            <h2 className="display-5 fw-normal text-warning mb-4">Our Best Services For You</h2>
           </div>
         </div>
 
@@ -75,7 +75,7 @@ const ServicesSection = () => {
                 </h5>
                 
                 {/* Description */}
-                <p className="card-text text-muted small lh-base">
+                <p className="card-text big lh-base">
                   {service.description}
                 </p>
 

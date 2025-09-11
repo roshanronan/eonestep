@@ -79,6 +79,7 @@ const HardwareCourse = () => {
   ];
   return (
   <div className='container my-5'>
+    <h1 className='mb-4 fw-bold text-center text-white display-5'>Computer Hardware Courses</h1>
         <CourseCards courses={courses}/>
     </div>
   )

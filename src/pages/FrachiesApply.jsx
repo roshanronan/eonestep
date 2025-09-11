@@ -1,23 +1,44 @@
 import React, { useState } from 'react';
+import apiService from '../utils/apiService';
+import { toast } from "react-toastify";
+import { validate } from '../utils/formValidation';
+import { useAuth } from '../utils/AuthContext';
+
+const initialFormState = {
+  name: '',
+  instituteName: '',  
+  pincode: '',
+  town: '',
+  city: '',     
+  state: '',
+  phone: '',
+  email: '',
+  country: '',
+  totalCoverArea: '',
+  totalComputer: '',
+  totalStaff: ''
+}; 
+
+const validationRules = {
+  name: { required: true, minLength: 2, message: 'Person name is required' },
+  instituteName: { required: true, minLength: 2, message: 'Institute name is required' },
+  pincode: { required: true, pattern: /^\d{6}$/, message: 'Pin code must be 6 digits' },
+  town: { required: true, message: 'Town is required' },
+  city: { required: true, message: 'City is required' },
+  state: { required: true, message: 'State is required' },
+  phone: { required: true, pattern: /^\d{10}$/, message: 'Phone must be 10 digits' },
+  email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Email is invalid' },
+  country: { required: true, message: 'Country is required' },
+  totalCoverArea: { required: true, message: 'Total Cover area is required' },
+  totalComputer: { required: true, message: 'Total Computer count is required' },
+  totalStaff: { required: true, message: 'Total Staff count is required' },
+};
 
 const FranchiseApplyForm = () => {
-  const [formData, setFormData] = useState({
-    personName: '',
-    instituteName: '',
-    pinCode: '',
-    town: '',
-    city: '',
-    state: '',
-    phone: '',
-    email: '',
-    country: '',
-    coverArea: '',
-    computerCount: '',
-    staffCount: ''
-  });
-
+  const [formData, setFormData] = useState(initialFormState);
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const {loading,setLoading}=useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,80 +55,74 @@ const FranchiseApplyForm = () => {
     }
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.personName.trim()) newErrors.personName = 'Person name is required';
-    if (!formData.instituteName.trim()) newErrors.instituteName = 'Institute name is required';
-    if (!formData.pinCode.trim()) newErrors.pinCode = 'Pin code is required';
-    if (!formData.town.trim()) newErrors.town = 'Town is required';
-    if (!formData.city.trim()) newErrors.city = 'City is required';
-    if (!formData.state.trim()) newErrors.state = 'State is required';
-    if (!formData.phone.trim()) newErrors.phone = 'Phone is required';
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-    if (!formData.country.trim()) newErrors.country = 'Country is required';
-    if (!formData.coverArea.trim()) newErrors.coverArea = 'Cover area is required';
-    if (!formData.computerCount.trim()) newErrors.computerCount = 'Computer count is required';
-    if (!formData.staffCount.trim()) newErrors.staffCount = 'Staff count is required';
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      // Here you would typically send the data to your backend
-      console.log('Form submitted:', formData);
-      setIsSubmitted(true);
+    const newErrors = validate(formData, validationRules);
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        setLoading(true);
+        apiService.post('/franchise/apply', formData)
+          .then(response => {
+            // console.log('Form submitted successfully:', response); 
+            toast.success(response?.message || 'Application submitted successfully!'  );
+            setIsSubmitted(true);
+            setFormData(initialFormState); // Reset form
+            setLoading(false);
+          })
+          .catch(error => {
+            setLoading(false);
+            console.error('Error submitting form:', error);
+            toast.error(error?.message || 'Failed to submit application. Please try again.');
+            // Handle submission error (e.g., show a notification)
+          }); 
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
     }
   };
 
-  if (isSubmitted) {
-    return (
-      <div className="container mt-5">
-        <div className="row justify-content-center">
-          <div className="col-md-8">
-            <div className="alert alert-success">
-              <h4 className="alert-heading">Thank you for your application!</h4>
-              <p>We have received your franchise application and will contact you shortly.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (isSubmitted) {
+  //   return (
+  //     <div className="container mt-5">
+  //       <div className="row justify-content-center">
+  //         <div className="col-md-8">
+  //           <div className="alert alert-success">
+  //             <h4 className="alert-heading">Thank you for your application!</h4>
+  //             <p>We have received your franchise application and will contact you shortly.</p>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="gradient-container">
       <div className="container py-5">
         <div className="row justify-content-center">
         <div className="col-md-8 ">
-          <div className="card">
-            <div className="card-header text-white text-center">
-              <h2 className='m-0 text-primary'>Franchise Apply With Eonestep</h2>
+          <div className="card" style={{backgroundColor:'rgba(255,255,255,0.8)'}}>
+            <div className="form-header">
+              <h2 className='m-0 text-white'><i class="fas fa-building me-2"></i>Franchise Apply With Eonestep</h2>
             </div>
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <h5 className="mb-4">Personal and Institute Information</h5>
-                <div className="mb-3">
-                  <label htmlFor="personName" className="form-label">Person Name*</label>
+                <div className="row mb-3">
+                  <div className="col-md-4 mb-3">
+                  <label htmlFor="name" className="form-label">Person Name*</label>
                   <input
                     type="text"
-                    className={`form-control ${errors.personName ? 'is-invalid' : ''}`}
-                    id="personName"
-                    name="personName"
-                    value={formData.personName}
+                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                   />
-                  {errors.personName && <div className="invalid-feedback">{errors.personName}</div>}
+                  {errors.name && <div className="invalid-feedback">{errors.name}</div>}
                 </div>
-
-                <div className="mb-3">
+                <div className=" col-md-8 mb-3">
                   <label htmlFor="instituteName" className="form-label">Name Of Institute*</label>
                   <input
                     type="text"
@@ -119,22 +134,26 @@ const FranchiseApplyForm = () => {
                   />
                   {errors.instituteName && <div className="invalid-feedback">{errors.instituteName}</div>}
                 </div>
+                </div>
+
+                
 
                 <h5 className="mb-4 mt-4">Address Information</h5>
+
                 <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="pinCode" className="form-label">Pin Code*</label>
+                  <div className="col-md-4 mb-3">
+                    <label htmlFor="pincode" className="form-label">Pin Code*</label>
                     <input
                       type="text"
-                      className={`form-control ${errors.pinCode ? 'is-invalid' : ''}`}
-                      id="pinCode"
-                      name="pinCode"
-                      value={formData.pinCode}
+                      className={`form-control ${errors.pincode ? 'is-invalid' : ''}`}
+                      id="pincode"
+                      name="pincode"
+                      value={formData.pincode}
                       onChange={handleChange}
                     />
-                    {errors.pinCode && <div className="invalid-feedback">{errors.pinCode}</div>}
+                    {errors.pincode && <div className="invalid-feedback">{errors.pincode}</div>}
                   </div>
-                  <div className="col-md-6 mb-3">
+                  <div className="col-md-4 mb-3">
                     <label htmlFor="town" className="form-label">Town*</label>
                     <input
                       type="text"
@@ -146,10 +165,7 @@ const FranchiseApplyForm = () => {
                     />
                     {errors.town && <div className="invalid-feedback">{errors.town}</div>}
                   </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6 mb-3">
+                   <div className="col-md-4 mb-3">
                     <label htmlFor="city" className="form-label">City*</label>
                     <input
                       type="text"
@@ -161,7 +177,11 @@ const FranchiseApplyForm = () => {
                     />
                     {errors.city && <div className="invalid-feedback">{errors.city}</div>}
                   </div>
-                  <div className="col-md-6 mb-3">
+                </div>
+
+                <div className="row">
+                 
+                  <div className="col-md-4 mb-3">
                     <label htmlFor="state" className="form-label">State*</label>
                     <input
                       type="text"
@@ -173,6 +193,18 @@ const FranchiseApplyForm = () => {
                     />
                     {errors.state && <div className="invalid-feedback">{errors.state}</div>}
                   </div>
+                  <div className=" col-md-4 mb-3">
+                  <label htmlFor="country" className="form-label">Country*</label>
+                  <input
+                    type="text"
+                    className={`form-control ${errors.country ? 'is-invalid' : ''}`}
+                    id="country"
+                    name="country"
+                    value={formData.country}
+                    onChange={handleChange}
+                  />
+                  {errors.country && <div className="invalid-feedback">{errors.country}</div>}
+                </div>
                 </div>
 
                 <h5 className="mb-4 mt-4">Contact Information</h5>
@@ -203,63 +235,53 @@ const FranchiseApplyForm = () => {
                   </div>
                 </div>
 
-                <div className="mb-3">
-                  <label htmlFor="country" className="form-label">Country*</label>
-                  <input
-                    type="text"
-                    className={`form-control ${errors.country ? 'is-invalid' : ''}`}
-                    id="country"
-                    name="country"
-                    value={formData.country}
-                    onChange={handleChange}
-                  />
-                  {errors.country && <div className="invalid-feedback">{errors.country}</div>}
-                </div>
+
 
                 <h5 className="mb-4 mt-4">Franchise Details</h5>
                 <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="coverArea" className="form-label">Total Cover Area (in Sqft)*</label>
+                  <div className="col-md-4 mb-3">
+                    <label htmlFor="totalCoverArea" className="form-label">Total Cover Area (in Sqft)*</label>
                     <input
                       type="number"
-                      className={`form-control ${errors.coverArea ? 'is-invalid' : ''}`}
-                      id="coverArea"
-                      name="coverArea"
-                      value={formData.coverArea}
+                      className={`form-control ${errors.totalCoverArea ? 'is-invalid' : ''}`}
+                      id="totalCoverArea"
+                      name="totalCoverArea"
+                      value={formData.totalCoverArea}
                       onChange={handleChange}
                     />
-                    {errors.coverArea && <div className="invalid-feedback">{errors.coverArea}</div>}
+                    {errors.totalCoverArea && <div className="invalid-feedback">{errors.totalCoverArea}</div>}
                   </div>
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="computerCount" className="form-label">Total No. of Computers*</label>
+                  <div className="col-md-4 mb-3">
+                    <label htmlFor="totalComputer" className="form-label">Total No. of Computers*</label>
                     <input
                       type="number"
-                      className={`form-control ${errors.computerCount ? 'is-invalid' : ''}`}
-                      id="computerCount"
-                      name="computerCount"
-                      value={formData.computerCount}
+                      className={`form-control ${errors.totalComputer ? 'is-invalid' : ''}`}
+                      id="totalComputer"
+                      name="totalComputer"
+                      value={formData.totalComputer}
                       onChange={handleChange}
                     />
-                    {errors.computerCount && <div className="invalid-feedback">{errors.computerCount}</div>}
+                    {errors.totalComputer && <div className="invalid-feedback">{errors.totalComputer}</div>}
                   </div>
-                </div>
-
-                <div className="mb-4">
-                  <label htmlFor="staffCount" className="form-label">Total No. of Staff*</label>
+                    <div className="col-md-4 mb-4">
+                  <label htmlFor="totalStaff" className="form-label">Total No. of Staff*</label>
                   <input
                     type="number"
-                    className={`form-control ${errors.staffCount ? 'is-invalid' : ''}`}
-                    id="staffCount"
-                    name="staffCount"
-                    value={formData.staffCount}
+                    className={`form-control ${errors.totalStaff ? 'is-invalid' : ''}`}
+                    id="totalStaff"
+                    name="totalStaff"
+                    value={formData.totalStaff}
                     onChange={handleChange}
                   />
-                  {errors.staffCount && <div className="invalid-feedback">{errors.staffCount}</div>}
+                  {errors.totalStaff && <div className="invalid-feedback">{errors.totalStaff}</div>}
+                </div>
                 </div>
 
+              
+
                 <div className="d-grid gap-2">
-                  <button type="submit" className="btn btn-primary btn-lg">
-                    Apply For Franchise
+                  <button type="submit" className="btn btn-primary btn-lg" disabled={loading}>
+                    Apply For Franchise {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> }
                   </button>
                 </div>
               </form>

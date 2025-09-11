@@ -144,8 +144,15 @@ export default function Footer() {
         }
       `}</style>
 
-      <footer className="footer">
-        <div className="mx-lg-5 px-lg-5 px-3">
+      <footer className="footer position-relative overflow-hidden">
+        <div className="position-absolute w-100 h-100" style={{top: 0, left: 0, zIndex: 1}}>
+      <div className="blur-circle circle1"></div>
+      <div className="blur-circle circle2"></div>
+      <div className="blur-circle circle3"></div>
+        </div>
+        <div className="mx-lg-5 px-lg-5 px-3 ">
+    
+
           <div className="row">
             {/* Company Info Section */}
             <div className="col-lg-4 col-md-6 col-12 px-4">
@@ -153,7 +160,7 @@ export default function Footer() {
               <p style={{fontSize:20}}>
                 EONESTEP in India Top Franchise Brand Free Franchise,how register open center No.1 Computer Center Education Institute in india Best computer education affiliation franchise registration
               </p>
-            </div>
+            </div>  
 
             {/* Contact Info Section */}
             <div className="col-lg-4 col-md-6 col-12 px-md-5 px-4">
@@ -176,7 +183,7 @@ export default function Footer() {
               
               <div className="contact-item">
                 <Mail className="icon-email" />
-                <p style={{fontSize:20}}>eonestep.education@gmail.com</p>
+                <p style={{fontSize:20,overflowWrap:"anywhere"}}>eonestep.education@gmail.com</p>
               </div>
             </div>
 
@@ -223,8 +230,7 @@ export default function Footer() {
               </div>
             </div>
           </div>
-
-          {/* Copyright Section */}
+         
           <div className="row">
             <div className="col-12">
               <div className="copyright">

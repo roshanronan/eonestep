@@ -1,63 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Building2, Check, X, MapPin, Calendar, User, Phone, Mail, Users,Pen } from 'lucide-react';
 
-const StudentList = () => {
-  const [students, setFranchises] = useState([
-    {
-      id: 1,
-      name: 'Rajesh Sharma',
-      location: 'Mumbai, Maharashtra',
-      phone: '+91 98765 43210',
-      email: 'rajesh@edutech.com',
-      appliedDate: '2024-01-15',
-      status: 'enrolled'
-    },
-    {
-      id: 2,
-      name: 'Ravi Patel',
-      location: 'Delhi, NCR',
-      phone: '+91 87654 32109',
-      email: 'priya@learnhub.com',
-      appliedDate: '2024-01-12',
-      status: 'enrolled'
-    },
-    {
-      id: 3,
-      name: 'Amit Kumar',
-      location: 'Bangalore, Karnataka',
-      phone: '+91 76543 21098',
-      email: 'amit@skillmaster.com',
-      appliedDate: '2024-01-10',
-      status: 'enrolled'
-    },
-    {
-      id: 4,
-      name: 'Deepika Iyer',
-      location: 'Chennai, Tamil Nadu',
-      phone: '+91 65432 10987',
-      email: 'deepika@smartlearn.com',
-      appliedDate: '2024-01-08',
-      status: 'enrolled'
-    },
-    {
-      id: 5,
-      name: 'Suresh Joshi',
-      location: 'Pune, Maharashtra',
-      phone: '+91 54321 09876',
-      email: 'suresh@techedu.com',
-      appliedDate: '2024-01-05',
-      status: 'enrolled'
-    }
-  ]);
+const StudentList = ({list}) => {
+  const [students, setStudents] = useState([]);
+  const navigate = useNavigate();
 
-  const handleAccept = (id) => {
-    setFranchises(students.map(franchise => 
-      franchise.id === id ? { ...franchise, status: 'accepted' } : franchise
-    ));
+    useEffect(() => {
+      setStudents(list.map(item => ({
+        id: item.id,
+        name: item.studentName,
+        location: item.town + ', ' + item.state,
+        phone: item.phone,
+        email: item.email,
+        enrollDate: item.createdAt,
+        status: 'enrolled'
+      })));
+    }, [list]);
+
+  const editStudent = (studentDetails) => {
+    // console.log("frang",franchise);
+    navigate(`/eonestep/edit-student/${studentDetails.id}`, { state: { student: studentDetails } });  
   };
 
   const handleReject = (id) => {
-    setFranchises(students.map(franchise => 
+    setStudents(students.map(franchise => 
       franchise.id === id ? { ...franchise, status: 'rejected' } : franchise
     ));
   };
@@ -123,7 +90,7 @@ const StudentList = () => {
                       <td>
                         <div className="d-flex align-items-center">
                           <Calendar size={16} className="text-muted me-2" />
-                          <span>{new Date(franchise.appliedDate).toLocaleDateString()}</span>
+                          <span>{new Date(franchise.enrollDate).toLocaleDateString()}</span>
                         </div>
                       </td>
                       <td>
@@ -134,7 +101,7 @@ const StudentList = () => {
                           <div className="d-flex gap-2">
                             <button
                               className="btn btn-success btn-sm"
-                              onClick={() => handleAccept(franchise.id)}
+                              onClick={() => editStudent(franchise)}
                             >
                               <Pen size={16} className="me-1" />
                               Edit

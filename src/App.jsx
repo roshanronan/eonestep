@@ -18,11 +18,16 @@ import { ProtectedRoute } from './utils/ProtectedRoute';
 import { useAuth } from './utils/AuthContext';
 import AuthHeader from './components/AuthHeader'
 import FranchiseList from './components/FrachiseList'
-
+import StudentRegistrationForm from './components/RegisterStudent';
+import Gallery from './components/Gallery';
+import ChangePassword from './pages/ChangePassword';
+import ResetPassword from './pages/ResetPassword'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function App() {
   useHeaderEffects()
     const location = useLocation();
-    const { user } = useAuth();
+    const { session } = useAuth();
 
 useEffect(() => {
   if (location.hash) {
@@ -46,9 +51,22 @@ useEffect(() => {
 
   return (
     <div>
-      { !user?.name && <div className='d-flex flex-xl-row flex-column justify-content-between align-items-center px-3 pt-3 mb-3 pb-3' style={{borderBottom:'2px solid green'}}>
-        <div className='d-flex flex-column justify-content-between'>
-          <h3>Best Education Brand in India (Free Franchise & Registration)</h3>
+       {/* <Toaster position="top-right" /> */}
+       <ToastContainer
+        position="top-right"     // where it appears
+        autoClose={3000}         // auto close in 3s
+        hideProgressBar={false}  // show progress bar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"          // "light", "dark", "colored"
+      />
+      {/* { !session?.user?.email && <div className='d-flex flex-xl-row flex-column justify-content-between align-items-center px-3 pt-3 mb-3 pb-3' style={{borderBottom:'2px solid green'}}>
+        <div className='d-flex flex-column justify-content-between '>
+          <h3 className='text-center'>Best Education Brand in India (Free Franchise & Registration)</h3>
          <div className='d-flex flex-lg-row flex-column align-items-center justify-content-center justify-content-md-start gap-lg-3 gap-1'> 
           <h6 className='m-0'> <Phone size={20} color='green'/> 8766391724 / 8860365077 </h6>
          <div className='d-flex align-items-center'> <img src="https://img.icons8.com/color/20/000000/gmail-new.png" /> <h6 className='m-0 px-2'>eonestep.education@gmail.com</h6></div>
@@ -60,8 +78,8 @@ useEffect(() => {
           <Link className='text-primary m-0' style={{fontSize:20,letterSpacing:'0.5',fontWeight:500}}>Gallery</Link>
         </div>
       </div>
-}
-     { user?.name ? <AuthHeader/> : <Header/>}
+} */}
+     { session?.user?.email ? <AuthHeader/> : <Header/>}
       <Routes>
           <Route path='/eonestep/' element={<Landing/>}/>
           <Route path='/eonestep/center-login'  element={<CenterLogin/>}/>
@@ -70,15 +88,30 @@ useEffect(() => {
           <Route path='/eonestep/hardware-course' element={<HardwareCourse/>} />
           <Route path='/eonestep/apply-franchise' element={<FranchiseApplyForm/>}/>
           <Route path='/eonestep/franchise-req' element={<FranchiseList/>}/>
+          <Route path='/eonestep/gallery' element={<Gallery/>}/>
+          <Route path='/eonestep/change-password' element={<ChangePassword/>}/>
+          <Route path='/eonestep/reset-password' element={<ResetPassword/>}/>
+          
+          {/* Protected Routes */}
+          <Route path='/eonestep/register-student' element={
+            <ProtectedRoute role="franchise">
+            <StudentRegistrationForm/>
+            </ProtectedRoute>
+            }/>
+          <Route path='/eonestep/edit-student/:id' element={
+            <ProtectedRoute role="franchise"> 
+              <StudentRegistrationForm editMode={true}/>
+            </ProtectedRoute>
+            }/>
           <Route path='/eonestep/admin-dashboard' element={
-            // <ProtectedRoute role="admin">
+            <ProtectedRoute role="admin">
               <AdminDashboard/>
-            // </ProtectedRoute>
+            </ProtectedRoute>
           }/>
           <Route path='/eonestep/center-dashboard' element={
-            // <ProtectedRoute role="center">
+            <ProtectedRoute role="franchise">
               <CenterDashboard/>
-            // </ProtectedRoute>
+            </ProtectedRoute>
           }/>
           
           <Route path='*' element={<NotFound/>}/>

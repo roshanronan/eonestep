@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 // Create axios instance with base configuration
 const api = axios.create({
@@ -9,7 +10,7 @@ const api = axios.create({
 // Request interceptor to add token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('session') ? JSON.parse(localStorage.getItem('session')).token : null ;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -25,11 +26,14 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     // Handle token expiration
-    if (error.response?.status === 401) {
+    if (error.response?.status === 498) {
       // Clear invalid token
-      localStorage.removeItem('token');
+       toast.error("Your session has expired. Please log in again.", { autoClose: 3000 });
+      localStorage.removeItem('session');
       // Optionally redirect to login
-      window.location.href = '/login';
+      setTimeout(() => {  
+      window.location.href = '/eonestep/'; 
+      }, 3000);
     }
     
     // Return structured error

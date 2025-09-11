@@ -33,6 +33,7 @@ import logo from './../assets/logo.jpg'
           align-items: center;
           justify-content: center;
           padding: 20px;
+          background: rgba(255, 255, 255, 0.45);
         }
         
         .login-card {
@@ -153,7 +154,7 @@ import logo from './../assets/logo.jpg'
           
           .logo-section,
           .login-form-section {
-            padding: 40px 20px;
+            padding: 40px 2px;
             min-height: auto;
           }
           
@@ -172,7 +173,7 @@ import logo from './../assets/logo.jpg'
           <div className="row g-0">
           
             <div className="col-lg-6 col-md-6 py-5 d-flex justify-content-center">
-                     <img src={logo} alt="" />
+                     <img src={logo} alt="" style={{width:'100%'}} />
             </div>
 
             <div className="col-lg-6 col-md-6 p-5">

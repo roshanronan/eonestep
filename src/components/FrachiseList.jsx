@@ -1,64 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Building2, Check, X, MapPin, Calendar, User, Phone, Mail,UserPlus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import apiService from '../utils/apiService';
+import { toast } from "react-toastify";
 
-const FranchiseList = () => {
-  const [franchises, setFranchises] = useState([
-    {
-      id: 1,
-      name: 'EduTech Mumbai Central',
-      owner: 'Rajesh Sharma',
-      location: 'Mumbai, Maharashtra',
-      phone: '+91 98765 43210',
-      email: 'rajesh@edutech.com',
-      appliedDate: '2024-01-15',
-      status: 'pending'
-    },
-    {
-      id: 2,
-      name: 'LearnHub Delhi North',
-      owner: 'Priya Patel',
-      location: 'Delhi, NCR',
-      phone: '+91 87654 32109',
-      email: 'priya@learnhub.com',
-      appliedDate: '2024-01-12',
-      status: 'pending'
-    },
-    {
-      id: 3,
-      name: 'SkillMaster Bangalore',
-      owner: 'Amit Kumar',
-      location: 'Bangalore, Karnataka',
-      phone: '+91 76543 21098',
-      email: 'amit@skillmaster.com',
-      appliedDate: '2024-01-10',
-      status: 'pending'
-    },
-    {
-      id: 4,
-      name: 'SmartLearn Chennai',
-      owner: 'Deepika Iyer',
-      location: 'Chennai, Tamil Nadu',
-      phone: '+91 65432 10987',
-      email: 'deepika@smartlearn.com',
-      appliedDate: '2024-01-08',
-      status: 'pending'
-    },
-    {
-      id: 5,
-      name: 'TechEdu Pune',
-      owner: 'Suresh Joshi',
-      location: 'Pune, Maharashtra',
-      phone: '+91 54321 09876',
-      email: 'suresh@techedu.com',
-      appliedDate: '2024-01-05',
-      status: 'pending'
+const FranchiseList = ({list}) => {
+  const navigate = useNavigate();
+  const [franchises, setFranchises] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setFranchises(list.map(item => ({
+      id: item.id,
+      name: item.instituteName,
+      owner: item.name,
+      location: item.city + ', ' + item.state,
+      phone: item.phone,
+      email: item.email,
+      appliedDate: item.createdAt,
+      status: item.status
+    })));
+  }, [list]);
+
+  const handleAccept = async (id) => {
+    try {
+      setLoading(true);
+      await apiService.patch(`/franchise/${id}/approve`);
+      setFranchises(franchises.map(franchise => 
+        franchise.id === id ? { ...franchise, status: 'approved' } : franchise
+      ));
+      setLoading(false);
+      toast.success('Franchise approved successfully!');
+    } catch (error) {
+      setLoading(false);
+      toast.error(error?.message||'Failed to approve franchise.');
     }
-  ]);
-
-  const handleAccept = (id) => {
-    setFranchises(franchises.map(franchise => 
-      franchise.id === id ? { ...franchise, status: 'accepted' } : franchise
-    ));
   };
 
   const handleReject = (id) => {
@@ -69,8 +45,8 @@ const FranchiseList = () => {
 
   const getStatusBadge = (status) => {
     switch(status) {
-      case 'accepted':
-        return <span className="badge bg-success">Accepted</span>;
+      case 'approved':
+        return <span className="badge bg-success">Approved</span>;
       case 'rejected':
         return <span className="badge bg-danger">Rejected</span>;
       default:
@@ -122,7 +98,7 @@ const FranchiseList = () => {
                   <Check size={24} className="me-3 text-success" />
                   <div>
                     <h5 className="card-title mb-0">Approved</h5>
-                    <h3 className="mb-0 fw-bold">{franchises.filter(f => f.status === 'accepted').length}</h3>
+                    <h3 className="mb-0 fw-bold">{franchises.filter(f => f.status === 'approved').length}</h3>
                   </div>
                 </div>
               </div>
@@ -134,7 +110,7 @@ const FranchiseList = () => {
         <div className="card shadow-sm border-0">
         <div className="card-header d-flex justify-content-between align-items-center">
           <h3 className="mb-0 fw-bold">Franchies Applications</h3>
-          <button className="btn btn-primary btn-sm">
+          <button className="btn btn-primary btn-sm" onClick={()=>navigate('/eonestep/apply-franchise')}>
             <UserPlus size={16} className="me-1" /> Add New Franchise
           </button>
         </div>
@@ -205,13 +181,13 @@ const FranchiseList = () => {
                               <Check size={16} className="me-1" />
                               Accept
                             </button>
-                            <button
+                            {/* <button
                               className="btn btn-danger btn-sm"
                               onClick={() => handleReject(franchise.id)}
                             >
                               <X size={16} className="me-1" />
                               Reject
-                            </button>
+                            </button> */}
                           </div>
                         ) : (
                           <span className="text-muted">Action taken</span>

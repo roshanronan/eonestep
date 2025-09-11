@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { X, Mail, Eye, EyeOff } from 'lucide-react';
+import logo from './../assets/logo.png';
 import { useAuth } from '../utils/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { X, Mail } from 'lucide-react';
-import logo from './../assets/logo.jpg';
+import { toast } from "react-toastify";
+import apiService from '../utils/apiService';
+import { validate } from '../utils/formValidation';
 
 
 
@@ -13,8 +16,18 @@ export default function CenterLogin() {
     password: '',
     forgotEmail: ''
   });
-  const { login } = useAuth();
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
+  const { login,loading,setLoading } = useAuth();
   const navigate = useNavigate();
+
+  const loginRules = {
+    centerId: { required: true, minLength: 3, message: 'Center ID is required' },
+    password: { required: true, minLength: 6, message: 'Password is required' },
+  };
+  const forgotRules = {
+    forgotEmail: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Valid email required' },
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,31 +35,81 @@ export default function CenterLogin() {
       ...prev,
       [name]: value
     }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
+  const handleLogin = async() => {
+  
+    const validationErrors = validate(formData, loginRules);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      toast.error('Please fix errors before submitting');
+      return;
+    }
+    try {
+        setLoading(true);
+      const response = await apiService.post('/auth/login', {
+        email: formData.centerId,    
+        password: formData.password,
+      });
+      setLoading(false);
 
+      
+      if(response?.data?.user?.mustChangePassword){
+        navigate('/eonestep/change-password',{state:{token:response?.data?.token }});
+        return;
+      }
+      login(response?.data); 
+      // toast.success('Login successful!');
+      if(response?.data?.user?.role == 'franchise'){
+        navigate('/eonestep/center-dashboard');
+      }
+      if(response?.data?.user?.role == 'admin'){
+        navigate('/eonestep/admin-dashboard');
+      }
+     
+    } catch (error) {
+      console.error('Login faileddd:', error);
+      setLoading(false);
+      toast.error(error?.message || 'Login failed. Please check your credentials.');
+      return;
+    }
 
-  const handleLogin = () => {
-    // Here you would call your API and check credentials
-    // For demo, we just set a fake user with role 'center'
-    const fakeUser = {
-      id: formData.centerId,
-      role: 'admin',
-      name: 'Center User'
-    };
-    login(fakeUser);
-    navigate('/eonestep/center-dashboard');
+    
   };
 
-  const handleForgotPassword = () => {
-    console.log('Forgot password email:', formData.forgotEmail);
+  const handleForgotPassword = async() => {
+    const validationErrors = validate(formData, forgotRules);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      toast.error('Please enter a valid email address', { autoClose: 4000 });
+      return;
+    }
+  try {
+    setLoading(true);
+      const response = await apiService.post('/auth/forgot-password', {
+      email: formData.forgotEmail,    
+    });   
     // Handle forgot password logic here
+    if(response?.status == 200){
+      setLoading(false);
+    toast.success('Reset link sent to your email!');
     setShowForgotModal(false);
     setFormData(prev => ({ ...prev, forgotEmail: '' }));
+    }
+  } catch (error) {
+      setLoading(false)
+      console.error('Forgot password error:', error);
+      toast.error(error?.message || 'Failed to send reset link. Please try again.');
+      return;   
+  }
   };
 
   return (
     <>
+     
       
       <style jsx>{`
         .login-container {
@@ -58,7 +121,7 @@ export default function CenterLogin() {
         }
         
         .login-card {
-          background: white;
+          background: rgba(255, 255, 255, 0.9);
           border-radius: 8px;
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
           overflow: hidden;
@@ -112,14 +175,14 @@ export default function CenterLogin() {
         }
         
         .forgot-link {
-          color: #e53e3e;
+          color: #0a6cdcff;
           text-decoration: none;
           font-weight: 500;
           transition: color 0.3s ease;
         }
         
         .forgot-link:hover {
-          color: #c53030;
+          color: #0a6cdcff;
           text-decoration: underline;
         }
         
@@ -175,7 +238,7 @@ export default function CenterLogin() {
           
           .logo-section,
           .login-form-section {
-            padding: 40px 20px;
+            padding: 40px 2px;
             min-height: auto;
           }
           
@@ -194,10 +257,10 @@ export default function CenterLogin() {
           <div className="row g-0">
           
             <div className="col-lg-6 col-md-6 py-5 d-flex justify-content-center">
-                     <img src={logo} alt="" />
+                     <img src={logo} alt="" style={{width:'100%'}}/>
             </div>
 
-            <div className="col-lg-6 col-md-6 p-5">
+            <div className="col-lg-6 col-md-6 col-12 p-md-5">
               <div className="login-form-section">
                 <div className="w-100">
                   <div className="welcome-text">Welcome to Center Login</div>
@@ -207,33 +270,41 @@ export default function CenterLogin() {
                     <div className="mb-3">
                       <input
                         type="text"
-                        className="form-control"
-                        placeholder="Center ID"
+                        className={`form-control${errors.centerId ? ' is-invalid' : ''}`}
+                        placeholder="Center ID/Email"
                         name="centerId"
                         value={formData.centerId}
                         onChange={handleInputChange}
-                        required
                       />
+                       {errors.centerId && <div className="invalid-feedback">{errors.centerId}</div>}
                     </div>
                     
-                    <div className="mb-4">
+                    <div className="mb-4 position-relative">
                       <input
-                        type="password"
-                        className="form-control"
+                        type={showPassword ? "text" : "password"}
+                        className={`form-control${errors.password ? ' is-invalid' : ''}`}
                         placeholder="Center Password"
                         name="password"
                         value={formData.password}
                         onChange={handleInputChange}
-                        required
                       />
+                      <span
+                        className="position-absolute end-0 top-50 translate-middle-y me-3"
+                        style={{ cursor: 'pointer', zIndex: 2 }}
+                        onClick={() => setShowPassword((prev) => !prev)}
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </span>
+                      {errors.password && <div className="invalid-feedback">{errors.password}</div>}
                     </div>
                     
                     <button 
                       type="button" 
                       className="btn btn-primary mb-3"
                       onClick={handleLogin}
+                      disabled={loading}
                     >
-                      Center Login
+                      Center Login {loading && <span className="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>}
                     </button>
                     
                     <div className="text-left">
@@ -282,13 +353,14 @@ export default function CenterLogin() {
                   <div className="mb-3">
                     <input
                       type="email"
-                      className="form-control"
+                      className={`form-control${errors.forgotEmail ? ' is-invalid' : ''}`}
                       placeholder="Enter your email address"
                       name="forgotEmail"
                       value={formData.forgotEmail}
                       onChange={handleInputChange}
                       required
                     />
+                    {errors.forgotEmail && <div className="invalid-feedback">{errors.forgotEmail}</div>}
                   </div>
                   <div className="d-flex justify-content-end gap-2">
                     <button 
