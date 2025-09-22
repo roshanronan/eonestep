@@ -75,7 +75,7 @@ export default function ResetPassword() {
         newPassword: formData.newPassword,
       });
       toast.success("Password reset successful!");
-      navigate("/eonestep/center-login");
+      navigate("/center-login");
     } catch (err) {
       toast.error(err?.message || "Failed to reset password");
     }

@@ -115,7 +115,7 @@ const HeroBanner = () => {
                   transition: 'transform 0.3s ease'
                 }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
                    onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
-                   onClick={() => {navigate("/eonestep/apply-franchise")} }
+                   onClick={() => {navigate("/apply-franchise")} }
                    >
                   Apply For Franchise
                 </button>
@@ -124,7 +124,7 @@ const HeroBanner = () => {
                   backdropFilter: 'blur(10px)',
                   borderColor: 'rgba(255, 255, 255, 0.3)'
                 }}
-                onClick={() => {navigate('/eonestep/gallery')} }
+                onClick={() => {navigate('/gallery')} }
                 >
                   View Gallery
                 </button>

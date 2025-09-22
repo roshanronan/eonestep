@@ -81,56 +81,56 @@ return (
          </div>
         </div>
         <div className='d-flex flex-xl-row flex-column align-items-center justify-content-between gap-lg-3 gap-1 pe-2'>
-          <Link to="/eonestep/apply-franchise" className='text-primary m-0' style={{fontSize:20,letterSpacing:'0.5',fontWeight:500}}>Apply For Franchise</Link>
+          <Link to="/apply-franchise" className='text-primary m-0' style={{fontSize:20,letterSpacing:'0.5',fontWeight:500}}>Apply For Franchise</Link>
           <Link className='text-primary m-0' style={{fontSize:20,letterSpacing:'0.5',fontWeight:500}}>Gallery</Link>
         </div>
       </div>
 } */}
      { session?.user?.email ? <AuthHeader/> : <Header/>}
       <Routes>
-          <Route path='/eonestep/' element={
+          <Route path='/' element={
             <PublicRoute>
               <Landing/>
             </PublicRoute>
             
             }/>
-          <Route path='/eonestep/center-login'  element={
+          <Route path='/center-login'  element={
              <PublicRoute>
               <CenterLogin/>
             </PublicRoute>
             }/>
-          <Route path='/eonestep/check-result' element={<VerifyCertificate/>}/>
-          <Route path='/eonestep/software-course' element={<SoftwareCourse/>} />
-          <Route path='/eonestep/hardware-course' element={<HardwareCourse/>} />
-          <Route path='/eonestep/apply-franchise' element={<FranchiseApplyForm/>}/>
-          <Route path='/eonestep/franchise-req' element={<FranchiseList/>}/>
-          <Route path='/eonestep/gallery' element={<Gallery/>}/>
-          <Route path='/eonestep/change-password' element={<ChangePassword/>}/>
-          <Route path='/eonestep/reset-password' element={<ResetPassword/>}/>
-          {/* <Route path='/eonestep/certificate' element={<StudentCertificate/>}/> */}
+          <Route path='/check-result' element={<VerifyCertificate/>}/>
+          <Route path='/software-course' element={<SoftwareCourse/>} />
+          <Route path='/hardware-course' element={<HardwareCourse/>} />
+          <Route path='/apply-franchise' element={<FranchiseApplyForm/>}/>
+          <Route path='/franchise-req' element={<FranchiseList/>}/>
+          <Route path='/gallery' element={<Gallery/>}/>
+          <Route path='/change-password' element={<ChangePassword/>}/>
+          <Route path='/reset-password' element={<ResetPassword/>}/>
+          {/* <Route path='/certificate' element={<StudentCertificate/>}/> */}
           
           {/* Protected Routes */}
-          <Route path='/eonestep/register-student' element={
+          <Route path='/register-student' element={
             <ProtectedRoute roles="franchise">
             <StudentRegistrationForm/>
             </ProtectedRoute>
             }/>
-          <Route path='/eonestep/edit-student/:id' element={
+          <Route path='/edit-student/:id' element={
             <ProtectedRoute roles="franchise"> 
               <StudentRegistrationForm editMode={true}/>
             </ProtectedRoute>
             }/>
-          <Route path='/eonestep/admin-dashboard' element={
+          <Route path='/admin-dashboard' element={
             <ProtectedRoute roles="admin">
               <AdminDashboard/>
             </ProtectedRoute>
           }/>
-          <Route path='/eonestep/edit-franchise/:id' element={
+          <Route path='/edit-franchise/:id' element={
             <ProtectedRoute roles={["admin","franchise"]}>
               <FranchiseApplyForm editMode={true}/>
             </ProtectedRoute>
           }/>
-          <Route path='/eonestep/center-dashboard' element={
+          <Route path='/center-dashboard' element={
             <ProtectedRoute roles="franchise">
               <CenterDashboard/>
             </ProtectedRoute>

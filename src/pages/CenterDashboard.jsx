@@ -133,7 +133,7 @@ const CenterDashboard = () => {
       <div className="card mb-4 shadow-sm">
         <div className="card-header d-flex justify-content-between flex-column flex-md-row align-items-center">
           <h3 className="mb-0 fw-bold">Students</h3>
-          <button className="btn btn-primary btn-sm" onClick={() => navigate('/eonestep/register-student')  }>
+          <button className="btn btn-primary btn-sm" onClick={() => navigate('/register-student')  }>
             <UserPlus size={16} className="me-1" /> Add New Student
           </button>
         </div>
@@ -163,7 +163,7 @@ const CenterDashboard = () => {
             <strong>Status:</strong> <BadgeCheck className="text-success" size={16} /> {franchiseData.status}
           </div>
           <div className="col-12 mt-2">
-            <button className="btn btn-outline-secondary btn-sm" onClick={()=>navigate(`/eonestep/edit-franchise/${session?.user?.franchiseId}`)}>
+            <button className="btn btn-outline-secondary btn-sm" onClick={()=>navigate(`/edit-franchise/${session?.user?.franchiseId}`)}>
               <Pencil size={14} className="me-1" /> Edit Profile
             </button>
           </div>

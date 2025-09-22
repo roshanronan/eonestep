@@ -168,7 +168,7 @@ const FranchiseList = ({list,getFranchiseData}) => {
         <div className="card shadow-sm border-0">
         <div className="card-header d-flex justify-content-between flex-column flex-md-row align-items-center">
           <h3 className="mb-0 fw-bold">Franchies Applications</h3>
-          <button className="btn btn-primary btn-sm" onClick={()=>navigate('/eonestep/apply-franchise')}>
+          <button className="btn btn-primary btn-sm" onClick={()=>navigate('/apply-franchise')}>
             <UserPlus size={16} className="me-1" /> Add New Franchise
           </button>
         </div>
@@ -270,7 +270,7 @@ const FranchiseList = ({list,getFranchiseData}) => {
                             </span>
                              <span className="text-white bg-primary d-flex align-items-center rounded-3 p-1"  title="Edit Franchise"
                               style={{cursor:'pointer'}}
-                              onClick={()=>navigate(`/eonestep/edit-franchise/${franchise.id}`)}
+                              onClick={()=>navigate(`/edit-franchise/${franchise.id}`)}
                               >
                               <Pencil size={20} className="" />    
                             </span>

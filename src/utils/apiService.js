@@ -32,7 +32,7 @@ api.interceptors.response.use(
       localStorage.removeItem('session');
       // Optionally redirect to login
       setTimeout(() => {  
-      window.location.href = '/eonestep/'; 
+      window.location.href = '/'; 
       }, 3000);
     }
     

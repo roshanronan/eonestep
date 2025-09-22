@@ -7,10 +7,10 @@ const PublicRoute = ({ children }) => {
   if (isAuthenticated) {
     // Redirect based on role
     if (session?.user?.role === "admin") {
-      return <Navigate to="/eonestep/admin-dashboard" replace />;
+      return <Navigate to="/admin-dashboard" replace />;
     }
     if (session?.user?.role === "franchise") {
-      return <Navigate to="/eonestep/center-dashboard" replace />;
+      return <Navigate to="/center-dashboard" replace />;
     }
   }
 

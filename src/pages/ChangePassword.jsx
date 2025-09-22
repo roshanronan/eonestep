@@ -66,7 +66,7 @@ const ChangePassword = () => {
         setLoading(false)
         toast.success(response?.message || "Password changed successfully");
         setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });
-        navigate("/eonestep/center-login");
+        navigate("/center-login");
     }
       } catch (error) {
         setLoading(false)

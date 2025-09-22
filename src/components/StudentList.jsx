@@ -32,7 +32,7 @@ const StudentList = ({list}) => {
     }, [list]); 
 
   const editStudent = (studentDetails) => {
-    navigate(`/eonestep/edit-student/${studentDetails.id}`, { state: { student: studentDetails } });  
+    navigate(`/edit-student/${studentDetails.id}`, { state: { student: studentDetails } });  
   };
 
   const handleReject = (id) => {

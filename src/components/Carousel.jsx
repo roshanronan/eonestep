@@ -1,7 +1,7 @@
 import React from 'react';
 import bannerImg1 from './../assets/BANNER.jpg'
 import bannerImg2 from './../assets/banner2.jpg'
-import bannerImg3 from './../assets/banner3.jpg'
+import bannerImg3 from './../assets/Banner3.jpg'
 import bannerImg4 from './../assets/banner4.jpg'
 
 const Carousel = ({ 

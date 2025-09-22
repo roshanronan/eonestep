@@ -10,7 +10,7 @@ const Header = () => {
       <header id="header" className="header d-flex sticky-top px-4 " >
     <div className="d-flex justify-content-between align-items-center w-100">
 
-      {/* <Link to='/eonestep/' className="logo d-flex align-items-center">
+      {/* <Link to='/' className="logo d-flex align-items-center">
         <h1 className="sitename">EoneStep</h1>
       </Link>
      */}
@@ -31,11 +31,11 @@ const Header = () => {
       <nav id="navmenu" className="navmenu" >
         <ul className=''>
            <li><Link to="/eonestep"> Home </Link></li>
-          <li><Link to="/eonestep/check-result"> Certificate Verification</Link></li>
+          <li><Link to="/check-result"> Certificate Verification</Link></li>
           <li className="dropdown"><Link href=""><span>Courses   <ChevronDown size={20} /></span></Link>
             <ul>
-              <li><Link to="/eonestep/software-course">Computer Software</Link></li>
-              <li><Link to="/eonestep/hardware-course">Computer Hardware</Link></li>
+              <li><Link to="/software-course">Computer Software</Link></li>
+              <li><Link to="/hardware-course">Computer Hardware</Link></li>
             </ul>
           </li>
           <li className="dropdown"><Link to="/eonestep#about"><span>About   <ChevronDown size={20}  /></span></Link>
@@ -53,7 +53,7 @@ const Header = () => {
             </ul>
           </li>
     
-        <li><Link to='/eonestep/center-login'>Center Login</Link></li>
+        <li><Link to='/center-login'>Center Login</Link></li>
         </ul>
         <i className="mobile-nav-toggle d-xl-none bi bi-list" style={{fontSize:40}}></i>
       </nav>

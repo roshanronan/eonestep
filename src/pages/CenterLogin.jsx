@@ -58,16 +58,16 @@ export default function CenterLogin() {
 
       
       if(response?.data?.user?.mustChangePassword){
-        navigate('/eonestep/change-password',{state:{token:response?.data?.token }});
+        navigate('/change-password',{state:{token:response?.data?.token }});
         return;
       }
       login(response?.data); 
       // toast.success('Login successful!');
       if(response?.data?.user?.role == 'franchise'){
-        navigate('/eonestep/center-dashboard');
+        navigate('/center-dashboard');
       }
       if(response?.data?.user?.role == 'admin'){
-        navigate('/eonestep/admin-dashboard');
+        navigate('/admin-dashboard');
       }
      
     } catch (error) {

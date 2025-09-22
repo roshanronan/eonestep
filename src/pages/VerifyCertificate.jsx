@@ -84,7 +84,7 @@ async function convertImagesToBase64(element) {
         setLoading(true);
      const response = await apiService.post('/students/certificate',payload)
      setLoading(false);
-      // navigate("/eonestep/certificate",{state:{studentData:response?.data?.student}})
+      // navigate("/certificate",{state:{studentData:response?.data?.student}})
      setStudentData(response?.data?.student)
      setShowModal(true)
     } catch (error) {

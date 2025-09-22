@@ -10,7 +10,7 @@ export function ProtectedRoute({ children, roles }) {
   const userHasRequiredRole = session?.user?.role && allowedRoles.includes(session.user.role);
 
   if (!session || !userHasRequiredRole) {
-    return <Navigate to="/eonestep/center-login" replace />;
+    return <Navigate to="/center-login" replace />;
   }
 
   return children;
