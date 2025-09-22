@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: 'https://eonestep-backend.onrender.com/api',
   // timeout: 20000, // 10 second timeout
 });
 
@@ -33,7 +33,7 @@ api.interceptors.response.use(
       // Optionally redirect to login
       setTimeout(() => {  
       window.location.href = '/'; 
-      }, 3000);
+      }, 2000);
     }
     
     // Return structured error
