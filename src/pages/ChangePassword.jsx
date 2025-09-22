@@ -4,6 +4,8 @@ import { validate } from "../utils/formValidation";
 import apiService from "../utils/apiService";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate,useLocation } from "react-router-dom";
+import { useAuth } from "../utils/AuthContext";
+
 
 const passwordPattern =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{10,}$/;
@@ -35,6 +37,7 @@ const ChangePassword = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
   const { state } = useLocation() || {};
+  const {loading,setLoading} = useAuth()
 
 
   const handleChange = (e) => {
@@ -49,6 +52,7 @@ const ChangePassword = () => {
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
         try {
+          setLoading(true)
         let response = await apiService.post("/auth/change-password", {
         currentPassword: formData.oldPassword,
         newPassword: formData.newPassword,
@@ -59,24 +63,28 @@ const ChangePassword = () => {
     },
   });
       if (response.status == 200) {
+        setLoading(false)
         toast.success(response?.message || "Password changed successfully");
         setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" });
         navigate("/eonestep/center-login");
     }
       } catch (error) {
+        setLoading(false)
         toast.error(error?.message || "Failed to change password");
       }
     } else {
+      setLoading(false)
       toast.error("Please fix the errors before submitting");
     }
   };
 
   return (
     <div className="login-container ">
-    <div className="container login-card py-5" style={{ maxWidth: 500 }}>
-      <h2 className="mb-4 fw-bold text-center">Change Password</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3 position-relative">
+    <div className="container login-card pt-3 p-5" style={{ maxWidth: 500 }}>
+      <h2 className="mb-4 fw-bold text-center mb-4">Change Password</h2>
+      <form className="d-flex justify-content-center flex-column" onSubmit={handleSubmit}>
+       <div>
+         <div className="mb-3 position-relative">
           {/* <label className="form-label">Old Password</label> */}
           <input
             type={showOld ? "text" : "password"}
@@ -141,8 +149,9 @@ const ChangePassword = () => {
             <div className="invalid-feedback">{errors.confirmPassword}</div>
           )}
         </div>
-        <button type="submit" className="btn btn-primary w-100">
-          Change Password
+       </div>
+        <button type="submit" className="btn btn-primary">
+          Change Password  {loading &&  <span className="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span> }
         </button>
       </form>
     </div>

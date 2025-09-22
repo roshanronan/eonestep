@@ -24,6 +24,12 @@ import ChangePassword from './pages/ChangePassword';
 import ResetPassword from './pages/ResetPassword'
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ScrollToTop from './components/ScrollToTop';
+import StudentCertificate from './pages/StudentCertificate';
+import PublicRoute from './utils/PublicRoute';
+import EditFranchise from './pages/EditFranchise'
+
+
 function App() {
   useHeaderEffects()
     const location = useLocation();
@@ -49,9 +55,10 @@ useEffect(() => {
   }
 }, [location]);
 
-  return (
+return (
     <div>
        {/* <Toaster position="top-right" /> */}
+       <ScrollToTop/>
        <ToastContainer
         position="top-right"     // where it appears
         autoClose={3000}         // auto close in 3s
@@ -81,8 +88,17 @@ useEffect(() => {
 } */}
      { session?.user?.email ? <AuthHeader/> : <Header/>}
       <Routes>
-          <Route path='/eonestep/' element={<Landing/>}/>
-          <Route path='/eonestep/center-login'  element={<CenterLogin/>}/>
+          <Route path='/eonestep/' element={
+            <PublicRoute>
+              <Landing/>
+            </PublicRoute>
+            
+            }/>
+          <Route path='/eonestep/center-login'  element={
+             <PublicRoute>
+              <CenterLogin/>
+            </PublicRoute>
+            }/>
           <Route path='/eonestep/check-result' element={<VerifyCertificate/>}/>
           <Route path='/eonestep/software-course' element={<SoftwareCourse/>} />
           <Route path='/eonestep/hardware-course' element={<HardwareCourse/>} />
@@ -91,25 +107,31 @@ useEffect(() => {
           <Route path='/eonestep/gallery' element={<Gallery/>}/>
           <Route path='/eonestep/change-password' element={<ChangePassword/>}/>
           <Route path='/eonestep/reset-password' element={<ResetPassword/>}/>
+          {/* <Route path='/eonestep/certificate' element={<StudentCertificate/>}/> */}
           
           {/* Protected Routes */}
           <Route path='/eonestep/register-student' element={
-            <ProtectedRoute role="franchise">
+            <ProtectedRoute roles="franchise">
             <StudentRegistrationForm/>
             </ProtectedRoute>
             }/>
           <Route path='/eonestep/edit-student/:id' element={
-            <ProtectedRoute role="franchise"> 
+            <ProtectedRoute roles="franchise"> 
               <StudentRegistrationForm editMode={true}/>
             </ProtectedRoute>
             }/>
           <Route path='/eonestep/admin-dashboard' element={
-            <ProtectedRoute role="admin">
+            <ProtectedRoute roles="admin">
               <AdminDashboard/>
             </ProtectedRoute>
           }/>
+          <Route path='/eonestep/edit-franchise/:id' element={
+            <ProtectedRoute roles={["admin","franchise"]}>
+              <FranchiseApplyForm editMode={true}/>
+            </ProtectedRoute>
+          }/>
           <Route path='/eonestep/center-dashboard' element={
-            <ProtectedRoute role="franchise">
+            <ProtectedRoute roles="franchise">
               <CenterDashboard/>
             </ProtectedRoute>
           }/>

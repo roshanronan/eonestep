@@ -48,7 +48,7 @@ const StudentRegistrationForm = ({ editMode = false }) => {
           const student = response.data.student;
           setFormData({
             studentName: student.studentName || "",
-            courseName: student.courseName || "",
+            courseName: student.Courses[0].courseName || "",
             guardianType: student.guardianType || "",
             gender: student.gender || "",
             fatherName: student.fatherName || "",
@@ -63,12 +63,13 @@ const StudentRegistrationForm = ({ editMode = false }) => {
             phone: student.phone || "",
             email: student.email || "",
             password: "", // do not prefill password
-            subjectName: student.subjectName || "",
+            subjectName: student.Courses[0].subjects || "",
             selectFromSession: student.selectFromSession || "",
             selectToSession: student.selectToSession || "",
           });
           if (student.imageUpload) {
-            setImagePreview(import.meta.env.VITE_IMAGE_BASE_URL + student.imageUpload);
+            // setImagePreview(import.meta.env.VITE_IMAGE_BASE_URL + student.imageUpload);
+             setImagePreview(student.imageUpload);
           }
         } catch (error) {
           toast.error("Failed to fetch student details");
@@ -77,6 +78,9 @@ const StudentRegistrationForm = ({ editMode = false }) => {
       fetchStudent();
     }
   }, [editMode, studentId]);
+ const injectionPattern = /(<script.*?>.*?<\/script.*?>)|(;|--|\b(select|update|delete|insert|drop|alter|create|truncate|exec|union|sleep)\b)/i;
+ 
+
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -95,6 +99,9 @@ const StudentRegistrationForm = ({ editMode = false }) => {
         ...prev,
         [name]: value,
       }));
+       if (value && injectionPattern.test(value)) {
+      setErrors({[name]:'Invalid value detected.'})
+    }
     }
 
     // Clear error when user starts typing
@@ -105,6 +112,8 @@ const StudentRegistrationForm = ({ editMode = false }) => {
       }));
     }
   };
+
+  
 
   const validateForm = () => {
     const newErrors = {};
@@ -188,11 +197,11 @@ const StudentRegistrationForm = ({ editMode = false }) => {
       newErrors.email = "Please enter a valid email address";
     }
 
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
+    // if (!formData.password) {
+    //   newErrors.password = "Password is required";
+    // } else if (formData.password.length < 6) {
+    //   newErrors.password = "Password must be at least 6 characters";
+    // }
 
     // if (!formData.subjectName.trim()) {
     //   newErrors.subjectName = 'Subject name is required';
@@ -213,7 +222,7 @@ const StudentRegistrationForm = ({ editMode = false }) => {
     e.preventDefault();
     const newErrors = validateForm();
     if (Object.keys(newErrors).length === 0) {
-      setIsSubmitted(true);
+      // 
       try {
         // Prepare form data for file upload
         setLoading(true);
@@ -222,6 +231,7 @@ const StudentRegistrationForm = ({ editMode = false }) => {
           formPayload.append(key, value);
         });
         formPayload.append("franchise_id", session.user.franchiseId);
+
         let response;
         if(editMode){
           response = await apiService.put(
@@ -240,6 +250,8 @@ const StudentRegistrationForm = ({ editMode = false }) => {
             headers: { "Content-Type": "multipart/form-data" },
           }
         );
+          setIsSubmitted(true);
+          setImagePreview(null)
           setLoading(false);
         }
       
@@ -252,6 +264,7 @@ const StudentRegistrationForm = ({ editMode = false }) => {
       }
     } else {
       setErrors(newErrors);
+      toast.error('Please filled the required field(s)')
     }
   };
 
@@ -740,7 +753,7 @@ const StudentRegistrationForm = ({ editMode = false }) => {
                 <div className="row mb-4">
                   <div className="col-md-4 mb-3">
                     <label className="form-label">Subject Name</label>
-                    <select
+                    {/* <select
                       className={`form-select ${
                         errors.subjectName ? "is-invalid" : ""
                       }`}
@@ -754,7 +767,17 @@ const StudentRegistrationForm = ({ editMode = false }) => {
                           {subject}
                         </option>
                       ))}
-                    </select>
+                    </select> */}
+                    <input
+                      type="text"
+                      className={`form-control ${
+                        errors.district ? "is-invalid" : ""
+                      }`}
+                      name="subjectName"
+                      value={formData.subjectName}
+                      onChange={handleInputChange}
+                      placeholder="Enter Subject"
+                    />
                     {errors.subjectName && (
                       <div className="invalid-feedback">
                         {errors.subjectName}

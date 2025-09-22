@@ -2,8 +2,8 @@
 
 
 :root {
-  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway", sans-serif;
+  --default-font: "Poppins", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Poppins", "Raleway", sans-serif;
   --nav-font: "Poppins", sans-serif;
 }
 
@@ -52,7 +52,7 @@
 body {
   /* background: linear-gradient(to bottom,  #01702e 0%, #114597 100%); */
   /* background: linear-gradient(135deg, #691deeff 0%, rgb(146, 119, 193) 50%, #691deeff 100%); */
-  background: linear-gradient(135deg, #1e3a8a 0%, #691deeff 50%, #3730a3 100%);
+  background: linear-gradient(135deg, #000000 0%, rgb(100, 38, 206) 50%, #2b180b 100%);
   color: black;
   width: 100%;
 
@@ -90,7 +90,7 @@ h6 {
   --heading-color: #ffffff;
   color: var(--default-color);
   /* background-color: transparent; */
-  padding: 15px 0;
+  padding: 10px 0;
   transition: all 0.5s ease-in-out;
   z-index: 997;
   width: 100%;
@@ -274,7 +274,7 @@ h6 {
     display: none;
     list-style: none;
     position: absolute;
-    inset: 60px 20px 20px 20px;
+    /* inset: 60px 20px 20px 20px; */
     padding: 10px 0;
     margin: 0;
     border-radius: 6px;
@@ -284,6 +284,8 @@ h6 {
     z-index: 9998;
     box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
     height: fit-content;
+    right: 20px;
+    top: 60px;
   }
 
   .navmenu a,
@@ -397,6 +399,10 @@ h6 {
   padding: 12px 30px;
   font-weight: 600;
 }
+
+/* .btn-primary:hover{
+  background: #aa0b0b;
+} */
 
 
 /* Student Register form */
@@ -554,3 +560,16 @@ h6 {
   background-color: #b5bcb5;
   cursor: not-allowed;
 }
+
+     .btn-secondary {
+          background: #e2e8f0;
+          border: none;
+          border-radius: 8px;
+          padding: 12px 30px;
+          color: #4a5568;
+          font-weight: 600;
+        }
+/* 
+         .btn-secondary:hover{
+          background-color: #000;
+         } */

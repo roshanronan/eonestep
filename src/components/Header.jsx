@@ -2,6 +2,7 @@ import React from 'react'
 import { ChevronDown,BookOpen  } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
+import logo from "../assets/logo.png"
 
 const Header = () => {
   const { session } = useAuth();
@@ -13,15 +14,17 @@ const Header = () => {
         <h1 className="sitename">EoneStep</h1>
       </Link>
      */}
-      <div className="d-flex align-items-center">
-              <div className="me-3 p-3 rounded" style={{
-                background: 'rgba(255, 255, 255, 0.15)',
+      <div className="d-flex align-items-center" >
+              <div className="me-3 rounded" style={{
+                background: 'rgba(255, 255, 255, 1)',
                 backdropFilter: 'blur(10px)'
               }}>
-                <BookOpen className="text-white" size={32} />
+                {/* <BookOpen className="text-white" size={32} /> */}
+                <img src={logo} alt="Eonestep Academy logo" height={55} style={{  maxWidth: "100%",
+      objectFit: "contain"}} />
               </div>
-              <div>
-                <h2 className="text-white mb-0 fw-bold">EoneStep Education</h2>
+              <div className='d-none d-md-block'>
+                <h2 className="text-white mb-0 fw-bold">EoneStep Academy</h2>
                 <small className="text-light opacity-75">Excellence in Learning</small>
               </div>
             </div>

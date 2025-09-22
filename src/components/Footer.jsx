@@ -153,9 +153,9 @@ export default function Footer() {
         <div className="mx-lg-5 px-lg-5 px-3 ">
     
 
-          <div className="row">
+          <div className="row d-flex flex-column flex-md-row justify-content-center">
             {/* Company Info Section */}
-            <div className="col-lg-4 col-md-6 col-12 px-4">
+            <div className="col-lg-4 col-md-6 col-12 d-flex flex-column align-items-start">
               <h2>EONESTEP</h2>
               <p style={{fontSize:20}}>
                 EONESTEP in India Top Franchise Brand Free Franchise,how register open center No.1 Computer Center Education Institute in india Best computer education affiliation franchise registration
@@ -163,7 +163,7 @@ export default function Footer() {
             </div>  
 
             {/* Contact Info Section */}
-            <div className="col-lg-4 col-md-6 col-12 px-md-5 px-4">
+            <div className="col-lg-4 col-md-6 col-12 d-flex flex-column align-items-strat">
               <h3>CONTACT US</h3>
               
               <div className="contact-item">
@@ -188,7 +188,7 @@ export default function Footer() {
             </div>
 
             {/* Social Media Section */}
-            <div className="col-lg-4 col-md-12 col-12 px-4">
+            <div className="col-lg-4 col-md-12 col-12 d-flex flex-column align-items-center">
               <h3>SOCIAL MEDIA HANDLE</h3>
               
               <div className="social-icons">

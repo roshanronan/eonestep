@@ -20,6 +20,7 @@ export default function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+
   React.useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const t = params.get("token");
@@ -74,7 +75,7 @@ export default function ResetPassword() {
         newPassword: formData.newPassword,
       });
       toast.success("Password reset successful!");
-      navigate("/eonestep/login");
+      navigate("/eonestep/center-login");
     } catch (err) {
       toast.error(err?.message || "Failed to reset password");
     }
@@ -93,10 +94,10 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="container mt-5" style={{ maxWidth: 500 }}>
-      <div className="card shadow-lg">
-        <div className="card-header bg-primary text-white text-center">
-          <h4>Reset Password</h4>
+    <div className="container my-5" style={{ maxWidth: 500 }}>
+      <div className="card shadow-lg " >
+        <div className="card-header text-white text-center form-header">
+          <h4 className="text-white">Reset Password</h4>
         </div>
         <div className="card-body">
           <form onSubmit={handleSubmit}>

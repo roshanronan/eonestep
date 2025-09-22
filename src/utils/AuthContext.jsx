@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
   const logout = () => setSession(null);
 
   return (
-    <AuthContext.Provider value={{ session, login, logout, loading, setLoading }}>
+    <AuthContext.Provider value={{ session, isAuthenticated:!!session, login, logout, loading, setLoading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,0 +1,67 @@
+/* Certificate.css */
+
+.certificate-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 5px solid #333;
+  background: #fff;
+  font-family: "Times New Roman", serif;
+  color: #000;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.certificate-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.certificate-container td {
+  padding: 5px;
+  vertical-align: top;
+}
+
+.certificate-container .two {
+  margin-top: 20px;
+}
+
+.certificate-container .third td div,
+.certificate-container .four td div {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.certificate-container span {
+  font-weight: bold;
+  font-size: 20px;
+  text-transform: capitalize;
+}
+
+.certificate-container hr {
+  border: 0;
+  border-top: 1px solid #8a8a8a;
+  margin: 10px 0;
+}
+
+.certificate-container .five {
+  margin-top: 40px;
+}
+
+@media print {
+  @page {
+    margin: 0; /* removes browser print margins */
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.certificate-container {
+  page-break-inside: avoid;
+}
+.certificate-spacing {
+  margin: 10px 0; /* adjust spacing instead of <br/> */
+}

@@ -114,7 +114,9 @@ const HeroBanner = () => {
                   transform: 'scale(1)',
                   transition: 'transform 0.3s ease'
                 }} onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-                   onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
+                   onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                   onClick={() => {navigate("/eonestep/apply-franchise")} }
+                   >
                   Apply For Franchise
                 </button>
                 <button className="btn btn-outline-light btn-lg px-md-5 px-1 py-md-3 py-1 rounded-pill fw-bold" style={{

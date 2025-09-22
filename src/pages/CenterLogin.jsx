@@ -95,7 +95,7 @@ export default function CenterLogin() {
     // Handle forgot password logic here
     if(response?.status == 200){
       setLoading(false);
-    toast.success('Reset link sent to your email!');
+    toast.success(response?.message || 'Reset link sent to your email', { autoClose: 4000 });
     setShowForgotModal(false);
     setFormData(prev => ({ ...prev, forgotEmail: '' }));
     }
@@ -109,8 +109,6 @@ export default function CenterLogin() {
 
   return (
     <>
-     
-      
       <style jsx>{`
         .login-container {
           min-height: 80vh;
@@ -256,8 +254,10 @@ export default function CenterLogin() {
         <div className="login-card container">
           <div className="row g-0">
           
-            <div className="col-lg-6 col-md-6 py-5 d-flex justify-content-center">
-                     <img src={logo} alt="" style={{width:'100%'}}/>
+            <div className="col-lg-6 col-md-6 py-md-5 py-sm-3 py-1 d-flex justify-content-center">
+                     <img src={logo} alt="" style={{maxWidth: "100%",
+      height: "auto",
+      objectFit: "contain"}}/>
             </div>
 
             <div className="col-lg-6 col-md-6 col-12 p-md-5">
@@ -374,8 +374,9 @@ export default function CenterLogin() {
                       type="button" 
                       className="btn btn-primary"
                       onClick={handleForgotPassword}
+                      disabled={loading}
                     >
-                      Send Reset Link
+                      Send Reset Link {loading && <span className="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>} 
                     </button>
                   </div>
                 </div>

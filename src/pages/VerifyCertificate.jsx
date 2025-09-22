@@ -1,12 +1,51 @@
 import React, { useState } from 'react';
 import { X, Mail } from 'lucide-react';
-import logo from './../assets/logo.jpg'
+import logo from './../assets/logo.png'
+import apiService from '../utils/apiService';
+import { useAuth } from '../utils/AuthContext';
+import { validate } from '../utils/formValidation';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { Modal, Button } from "react-bootstrap";
+import html2pdf from 'html2pdf.js';
+import CertificatePDF from '../components/Certificate';
+
+async function convertImagesToBase64(element) {
+  const imgElements = element.querySelectorAll("img");
+
+  for (let img of imgElements) {
+    if (img.src.startsWith("data:")) {
+      // already base64
+      continue;
+    }
+
+    try {
+      const res = await fetch(img.src, { mode: "cors" });
+      const blob = await res.blob();
+
+      const reader = new FileReader();
+      const base64 = await new Promise((resolve) => {
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+      });
+
+      img.src = base64; // replace src with base64
+    } catch (err) {
+      console.error("Failed to convert image:", img.src, err);
+    }
+  }
+}
+
 
   const VerifyCertificate =()=> {
+  const {loading,setLoading } = useAuth();
+  const [errors, setErrors] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [studentData, setStudentData] = useState(null);
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     enrollNo: '',
     rollNo: '',
-    forgotEmail: ''
   });
 
   const handleInputChange = (e) => {
@@ -15,11 +54,66 @@ import logo from './../assets/logo.jpg'
       ...prev,
       [name]: value
     }));
+
+    setErrors(prev =>(
+      {
+        ...prev,
+        [name]:""
+      }
+    ))
   };
 
-  const handleCheckResult = () => {
-    console.log('Login data:', { enrollNo: formData.enrollNo, rollNo: formData.rollNo });
+    const checkResultRules = {
+    enrollNo: { required: true, minLength: 8, message: 'Enoll No is required' },
+    rollNo: { required: true, minLength: 6, message: 'Roll No is required' },
+  };
+
+  const handleCheckResult = async () => {
+
+    const payload = { enrollNumber: formData.enrollNo, rollNumber: formData.rollNo }
+   
+
+    const validationErrors = validate(formData, checkResultRules);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      toast.error('Please fix errors before submitting');
+      return;
+    }
+
+    try {
+        setLoading(true);
+     const response = await apiService.post('/students/certificate',payload)
+     setLoading(false);
+      // navigate("/eonestep/certificate",{state:{studentData:response?.data?.student}})
+     setStudentData(response?.data?.student)
+     setShowModal(true)
+    } catch (error) {
+      console.error('Fetch Result Failed:', error);
+      setLoading(false);
+      toast.error(error?.message || 'Fetch Result Failed. Please check your credentials.');
+      return;
+    }
+
     // Handle login logic here
+  };
+
+     const options = {
+      margin: 0,
+      filename: `${studentData?.enrollNumber}-certificate.pdf`,
+      image: { type: "jpeg", quality: 2 },
+      html2canvas: { scale: 1,useCORS: true }, // better quality
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+    const handleDownload = async() => {
+       const element = document.getElementById("certificate");
+    // const element = document.getElementById("certificate");
+    await convertImagesToBase64(element);
+    html2pdf().set(options).from(element).save();
+    setShowModal(false);
+     setFormData(prev => ({
+      ...prev,
+      [name]: ''
+    }));
   };
 
 
@@ -33,7 +127,7 @@ import logo from './../assets/logo.jpg'
           align-items: center;
           justify-content: center;
           padding: 20px;
-          background: rgba(255, 255, 255, 0.45);
+          // background: rgba(255, 255, 255, 0.45);
         }
         
         .login-card {
@@ -172,11 +266,15 @@ import logo from './../assets/logo.jpg'
         <div className="login-card container">
           <div className="row g-0">
           
-            <div className="col-lg-6 col-md-6 py-5 d-flex justify-content-center">
-                     <img src={logo} alt="" style={{width:'100%'}} />
+            <div className="col-lg-6 col-md-6 py-md-5 py-sm-3 py-1 d-flex justify-content-center">
+                     <img src={logo} alt=""style={{
+      maxWidth: "100%",
+      height: "auto",
+      objectFit: "contain"
+    }} />
             </div>
 
-            <div className="col-lg-6 col-md-6 p-5">
+            <div className="col-lg-6 col-md-6 p-md-5 p-sm-3 p-1">
               <div className="login-form-section">
                 <div className="w-100">
                   <div className="welcome-text">Welcome to Certificate Verification</div>
@@ -186,36 +284,62 @@ import logo from './../assets/logo.jpg'
                     <div className="mb-3">
                       <input
                         type="text"
-                        className="form-control"
+                           className={`form-control${errors.enrollNo ? ' is-invalid' : ''}`}
                         placeholder="Enrollment No"
                         name="enrollNo"
                         value={formData.enrollNo}
                         onChange={handleInputChange}
                         required
                       />
+                        {errors.enrollNo && <div className="invalid-feedback">{errors.enrollNo}</div>}
                     </div>
                     
                     <div className="mb-4">
                       <input
                         type="text"
-                        className="form-control"
+                           className={`form-control${errors.rollNo ? ' is-invalid' : ''}`}
                         placeholder="Roll No"
                         name="rollNo"
                         value={formData.rollNo}
                         onChange={handleInputChange}
                         required
                       />
+                         {errors.rollNo && <div className="invalid-feedback">{errors.rollNo}</div>}
                     </div>
                     
                     <button 
                       type="button" 
                       className="btn btn-primary mb-3"
                       onClick={handleCheckResult}
+                      disabled={loading}
                     >
-                      Check Result
+                      Check Result {loading && <span className="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>}
                     </button>
                   </div>
                 </div>
+                 <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Certificate Ready</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          The certificate for <b>{studentData?.studentName}</b> is ready.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleDownload}>
+            Download PDF
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <div style={{ display: "none" }}>
+        <div id="certificate">
+          <CertificatePDF studentDetails={studentData}/>
+          {/* your full certificate design */}
+        </div>
+      </div>
               </div>
             </div>
           </div>

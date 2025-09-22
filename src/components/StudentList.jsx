@@ -1,10 +1,19 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Building2, Check, X, MapPin, Calendar, User, Phone, Mail, Users,Pen } from 'lucide-react';
+import { Building2, Check, X, MapPin, Calendar, User, Phone, Mail, Users,Pen,UserRound, UserRoundCheck, UserRoundPlus, UserRoundPen, FileUser, ShieldUser } from 'lucide-react';
+import defaultImg from '../assets/image.png'
+import StudentCourseModal from './StudentCourseModal';
 
 const StudentList = ({list}) => {
   const [students, setStudents] = useState([]);
   const navigate = useNavigate();
+  const [showModal,setShowModal] = useState(false);
+  const [studentId,setStudentId] = useState()
+
+  const toggleShowModal = (stuId) => {
+    setShowModal(!showModal);
+    setStudentId(stuId)
+  };
 
     useEffect(() => {
       setStudents(list.map(item => ({
@@ -14,35 +23,60 @@ const StudentList = ({list}) => {
         phone: item.phone,
         email: item.email,
         enrollDate: item.createdAt,
-        status: 'enrolled'
+        fatherName:item.fatherName,
+        enrollNumber:item.enrollNumber,
+        status: item.status,
+        // imagePreview: import.meta.env.VITE_IMAGE_BASE_URL + item.imageUpload 
+        
       })));
-    }, [list]);
+    }, [list]); 
 
   const editStudent = (studentDetails) => {
-    // console.log("frang",franchise);
     navigate(`/eonestep/edit-student/${studentDetails.id}`, { state: { student: studentDetails } });  
   };
 
   const handleReject = (id) => {
-    setStudents(students.map(franchise => 
-      franchise.id === id ? { ...franchise, status: 'rejected' } : franchise
-    ));
+    // setStudents(students.map(franchise => 
+    //   franchise.id === id ? { ...franchise, status: 'rejected' } : franchise
+    // ));
+    toggleShowModal(id)
   };
 
   const getStatusBadge = (status) => {
     switch(status) {
-      case 'accepted':
-        return <span className="badge bg-success">Accepted</span>;
+      case 'graduated':
+        return <span className="badge text-white bg-success"  title="Studnet Graduated">
+          <ShieldUser size={20} className="" /> 
+        </span>;
       case 'rejected':
         return <span className="badge bg-danger">Rejected</span>;
       default:
-        return <span className=" bg-info text-dark p-1 rounded-1">Enrolled</span>;
+        return  <span className="badge text-white bg-success"  title="Studnet Enrolled">
+          <UserRound size={20} className="" /> 
+        </span>;
     }
   };
 
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter students based on enrollNumber
+  const filteredStudents = students.filter(student =>
+    student.enrollNumber && student.enrollNumber.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className=" mb-5">
-      <div className="container-fluid px-0"> 
+    <div className="mb-5">
+      <div className="container-fluid px-0">
+        {/* Search Input */}
+        <div className="mb-3 col-lg-4 col-md-6 col-12">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by Enroll Number"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+          />
+        </div>
 
         <div className="card shadow-sm border-0">
           <div className="card-body p-0">
@@ -51,15 +85,17 @@ const StudentList = ({list}) => {
                 <thead className="table-light">
                   <tr>
                     <th scope="col">Student Details</th>
-                    {/* <th scope="col">Owner</th> */}
+                    {/* <th scope='col'>Photo</th> */}
+                    <th scope="col">Father Name</th>
+                    <th scope="col">Enroll No</th>
                     <th scope="col">Contact</th>
-                    <th scope="col">Applied Date</th>
+                    <th scope="col">Enroll Date</th>
                     <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {students.map((franchise) => (
+                  {filteredStudents.map((franchise) => (
                     <tr key={franchise.id}>
                       <td>
                         <div className="d-flex align-items-center">
@@ -68,10 +104,37 @@ const StudentList = ({list}) => {
                           </div>
                           <div>
                             <h6 className="mb-0 fw-bold">{franchise.name}</h6>
-                            <small className="text-muted d-flex align-items-center">
-                              <MapPin size={14} className="me-1" />
-                              {franchise.location}
-                            </small>
+                          </div>
+                        </div>
+                      </td>
+                      {/* <td>
+                        <div>
+                          <img
+                            src={franchise.imagePreview}
+                            alt="Pic"
+                            style={{
+                              maxWidth: "100%",
+                              maxHeight: 50,
+                              borderRadius: 8,
+                            }}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = defaultImg;
+                            }}
+                          />
+                        </div>
+                      </td> */}
+                      <td>
+                        <div>
+                          <div className="d-flex align-items-center mb-1">
+                            <small>{franchise.fatherName}</small>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div>
+                          <div className="d-flex align-items-center mb-1">
+                            <small>{franchise.enrollNumber}</small>
                           </div>
                         </div>
                       </td>
@@ -97,22 +160,17 @@ const StudentList = ({list}) => {
                         {getStatusBadge(franchise.status)}
                       </td>
                       <td>
-                        {franchise.status === 'enrolled' ? (
+                        {franchise.status === 'active' ? (
                           <div className="d-flex gap-2">
-                            <button
-                              className="btn btn-success btn-sm"
-                              onClick={() => editStudent(franchise)}
-                            >
-                              <Pen size={16} className="me-1" />
-                              Edit
-                            </button>
-                            <button
-                              className="btn btn-danger btn-sm"
-                              onClick={() => handleReject(franchise.id)}
-                            >
-                              <X size={16} className="me-1" />
-                              Block
-                            </button>
+                            <span className="badge text-white bg-info" onClick={() => editStudent(franchise)} title="Edit Studnet Info">
+                              <UserRoundPen size={20} className="" />
+                            </span>
+                            <span className="badge text-white bg-warning" onClick={() => handleReject(franchise.id)} title="Update Student Marksheet">
+                              <FileUser size={20} className="" />
+                            </span>
+                            {/* <span className="badge text-white bg-danger" onClick={() => handleReject(franchise.id)} title="Student Graduated">
+                              <UserRoundCheck size={20} className="" />
+                            </span> */}
                           </div>
                         ) : (
                           <span className="text-muted">Action taken</span>
@@ -126,16 +184,19 @@ const StudentList = ({list}) => {
           </div>
         </div>
 
+       { studentId && showModal && <StudentCourseModal showModal={showModal} setShowModal={setShowModal} toggleShowModal={toggleShowModal} id={studentId} />}
+
         {/* Empty State */}
-        {students.filter(f => f.status === 'enrolled').length === 0 && (
+        {filteredStudents.length === 0 && (
           <div className="text-center py-5">
             <Building2 size={48} className="text-muted mb-3" />
-            <h5 className="text-muted">No pending Students</h5>
-            <p className="text-muted">All Students have been reviewed.</p>
+            <h5 className="text-muted">No Students Found</h5>
+            <p className="text-muted">Try searching with a different Enroll Number.</p>
           </div>
         )}
       </div>
-    </div>  );
+    </div>
+  );
 };
 
 export default StudentList;

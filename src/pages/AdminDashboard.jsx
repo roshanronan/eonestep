@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Blocks, Building2, GraduationCap, TrendingUp, Users,Pencil,BadgeCheck } from 'lucide-react';
 import FranchiseList from '../components/FrachiseList';
 import apiService from '../utils/apiService';
+import FullPageLoader from '../components/FullPageLoader';
 
 const AdminDashboard = () => {
   const {user} = JSON.parse(localStorage.getItem('session')) || {};
-  const [adiminData, setAdminData] = React.useState(null);
+  const [adiminData, setAdminData] = useState(null);
+  const [pageLoader,setPageLoader] = useState(false)
 
   useEffect(() => {
     document.title = "Admin Dashboard - OneStep Education"
@@ -14,12 +16,15 @@ const AdminDashboard = () => {
   }, []);
 
   const getFranchiseData = () => {
+    setPageLoader(true)
     apiService.get('/franchise').then(response => {
       // console.log('Franchise Data:', response.data);
       // Handle the response data as needed
       setAdminData(response.data);
+      setPageLoader(false)
     }).catch(error => {
       console.error('Error fetching franchise data:', error);
+      setPageLoader(false)
     });
 
   }
@@ -52,11 +57,18 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="container min-vh-100">
+    <>
+      {
+        !pageLoader? <div className="container min-vh-100">
       <div className="container-fluid p-4">
         {/* Header */}
         <div className="mb-5">
-          <h1 className="display-4 fw-bold text-light mb-2">Admin Dashboard</h1>
+          <h1 className="display-4 fw-bold text-light mb-2"  style={{
+            background: 'linear-gradient(45deg, #fbbf24, #f472b6)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+          }}>Admin Dashboard</h1>
           <p className="text-light">Welcome back! Here's what's happening with your franchise network.</p>
         </div>
 
@@ -82,13 +94,15 @@ const AdminDashboard = () => {
           })}
         </div>
 
-        <FranchiseList list={adiminData?.FranchisesData?.Franchises ||[]}/>
+        <FranchiseList list={adiminData?.FranchisesData?.Franchises ||[]} getFranchiseData={getFranchiseData}/>
 
    
 
       
       </div>
-    </div>
+    </div>:<FullPageLoader/>
+      }
+    </>
   );
 };
 

@@ -36,7 +36,7 @@ const AchievementSection = () => {
         {/* Section Title */}
         <div className="row mb-5">
           <div className="col-12 text-center">
-            <h2 className="display-5 fw-normal text-white mb-0" >
+            <h2 className="display-5 fw-normal text-warning mb-0" >
               Our Achievement
             </h2>
           </div>

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 // Create axios instance with base configuration
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  timeout: 10000, // 10 second timeout
+  // timeout: 20000, // 10 second timeout
 });
 
 // Request interceptor to add token

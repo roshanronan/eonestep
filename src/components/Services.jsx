@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from "motion/react"
 
 const ServicesSection = () => {
   const services = [
@@ -41,7 +42,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <div className="container-fluid d-flex align-items-center justify-content-center mt-5">
+    <div className=" d-flex align-items-center justify-content-center mt-5">
       <div className="mb-5 pb-5">
         {/* Section Header */}
         <div className="row mb-5">
@@ -51,11 +52,23 @@ const ServicesSection = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="row g-4 justify-content-center mx-1">
+        <div  
+
+  viewport={{ once: true, margin: "-50px" }}
+            className="row g-4 justify-content-center mx-2 mx-md-5 px-md-5">
           {services.map((service) => (
-            <div key={service.id} className="col-lg-2 col-md-4 col-sm-6">
-            <div className={`card h-100 border-0 shadow-sm ${service.bgColor}`}>
-              <div className="card-body text-center p-4" style={{border:'1px solid gray',borderRadius:8}}>
+            <div key={service.id} className="col-md-4 col-sm-6">
+            <motion.div initial={{ opacity: 0, y: 100, scale: 0.8 }}
+  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+  transition={{
+    duration: 0.8,
+    ease: [0.25, 0.46, 0.45, 0.94],
+  }}
+   viewport={{ once: true }} 
+   className={`card h-100 border-0 shadow-sm ${service.bgColor}`} style={{backgroundImage:'linear-gradient(180deg, #F6A91D 0%, #FFFFFF 100%)'}}>
+              <div 
+                
+              className="card-body text-center p-4" style={{border:'1px solid gray',borderRadius:8}}>
                 {/* Icon Circle */}
                 <div 
                   className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
@@ -90,7 +103,7 @@ const ServicesSection = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           </div>
         ))}
       </div>
