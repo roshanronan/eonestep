@@ -20,7 +20,10 @@ const initialFormState = {
   country: '',
   totalCoverArea: '',
   totalComputer: '',
-  totalStaff: ''
+  totalStaff: '',
+  secretarySign: null,
+  examinerSign: null,
+  invigilatorSign: null,
 };
 
 const initialEditFormState = {

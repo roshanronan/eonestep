@@ -15,7 +15,8 @@ const initialState = {
     imageUpload: '',
     subjects: '',
     grade: '',
-    percentage: ''
+    percentage: '',
+    courseDuration :''
 }
 
 
@@ -31,7 +32,7 @@ const StudentCourseModal = ({ showModal, setShowModal, toggleShowModal, id }) =>
         const getStudentDetails = async () => {
             const response = await apiService.get(`/students/${id}/course-details`)
             const marks = response?.data?.student
-
+            console.log("marks",marks)
             setFormData({
                 studentName: marks.studentName,
                 fatherName: marks.fatherName,
@@ -39,7 +40,8 @@ const StudentCourseModal = ({ showModal, setShowModal, toggleShowModal, id }) =>
                 imageUpload: marks.imageUpload,
                 subjects: marks.subjects,
                 grade: marks.grade,
-                percentage: marks.percentage
+                percentage: marks.percentage,
+                courseDuration : marks.courseDuration
             })
         }
         getStudentDetails()
@@ -201,6 +203,25 @@ const StudentCourseModal = ({ showModal, setShowModal, toggleShowModal, id }) =>
                                     onChange={handleInputChange}
                                     placeholder="Subject"
                                     disabled={loading}
+                                    isInvalid={!!errors.subjects}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.subjects}
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={4}>
+                            <Form.Group>
+                                <Form.Label>Session</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="Session"
+                                    value={formData.courseDuration}
+                                    onChange={handleInputChange}
+                                    placeholder="session"
+                                    disabled={true}
                                     isInvalid={!!errors.subjects}
                                 />
                                 <Form.Control.Feedback type="invalid">

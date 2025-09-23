@@ -74,14 +74,14 @@ const CenterDashboard = () => {
     //   change: '+2.1%',
     //   changeType: 'positive'
     // },
-    {
-      title: 'Last Login',
-      value: '4 July, 2025',
-      icon: CalendarDays,
-      color: 'text-danger',
-      change: '+2.1%',
-      changeType: 'positive'
-    }
+    // {
+    //   title: 'Last Login',
+    //   value: '4 July, 2025',
+    //   icon: CalendarDays,
+    //   color: 'text-danger',
+    //   change: '+2.1%',
+    //   changeType: 'positive'
+    // }
   ];
 
   return (
