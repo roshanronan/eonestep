@@ -14,7 +14,7 @@ const Header = () => {
         <h1 className="sitename">EoneStep</h1>
       </Link>
      */}
-      <div className="d-flex align-items-center" >
+         <Link to='/' className="d-flex align-items-center" >
               <div className="me-3 rounded" style={{
                 background: 'rgba(255, 255, 255, 1)',
                 backdropFilter: 'blur(10px)'
@@ -27,10 +27,10 @@ const Header = () => {
                 <h2 className="text-white mb-0 fw-bold">EoneStep Academy</h2>
                 <small className="text-light opacity-75">Excellence in Learning</small>
               </div>
-            </div>
+            </Link>
       <nav id="navmenu" className="navmenu" >
         <ul className=''>
-           <li><Link to="/eonestep"> Home </Link></li>
+           {/* <li><Link to="/eonestep"> Home </Link></li> */}
           <li><Link to="/check-result"> Certificate Verification</Link></li>
           <li className="dropdown"><Link href=""><span>Courses   <ChevronDown size={20} /></span></Link>
             <ul>
@@ -45,13 +45,14 @@ const Header = () => {
               <li><Link to="/eonestep#refundncancel">Refund & Cancellation Policy</Link></li>
             </ul>
           </li>
-          <li className="dropdown"><Link href=""><span>Student Zone   <ChevronDown size={20}  /></span></Link>
+          {/* <li className="dropdown"><Link href=""><span>Student Zone   <ChevronDown size={20}  /></span></Link>
             <ul>
               <li><Link href="">Student Verification</Link></li>
               <li><Link href="">Student Login</Link></li>
              
             </ul>
-          </li>
+          </li> */}
+           <li className="dropdown"><Link to='/live-classes'><span>Live Classes</span></Link></li>
     
         <li><Link to='/center-login'>Center Login</Link></li>
         </ul>

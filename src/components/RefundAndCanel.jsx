@@ -209,7 +209,7 @@ const RefundCancellationPolicy = () => {
         </div>
 
         {/* Distance between Center Section */}
-        <div className="policy-section">
+        {/* <div className="policy-section">
           <div className="icon-wrapper">
             <div className="icon">
               📍
@@ -223,7 +223,7 @@ const RefundCancellationPolicy = () => {
             <span className="distance-highlight">1 Kilometer</span>
             in the Urban area. Confirm that there are no Other Study Center in your area before sending the registration form. If found, the 2nd Center franchise will be cancelled & No more amount will be refunded. If a Center wants to expand is Distance, It can call the given Number and get all Information.
           </p>
-        </div>
+        </div> */}
 
         {/* Refund Section */}
         <div className="policy-section">

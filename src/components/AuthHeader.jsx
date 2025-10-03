@@ -30,10 +30,11 @@ const AuthHeader = () => {
       <nav id="navmenu" className="navmenu" >
         <ul>
           <li><Link to="/check-result"> Certificate Verification</Link></li>
+           <li><Link to="/live-classes"> Live Classes</Link></li>
         {/* {<li>{session?.user?.role == 'franchise'? <Link to='/students'>Student</Link>:null}</li> } */}
         {<li>{session?.user?.role == 'franchise'? <Link to='/register-student'>Enroll Student</Link>:null}</li> }
         {<li>{session?.user?.role == 'franchise'? <Link to='/center-dashboard'>Center Dashboard</Link>:<Link to='/admin-dashboard'>Admin Dashboard</Link>}</li> }
-        <li><Link to='/eonestep' onClick={logout}>Logout</Link></li>
+        <li><Link to='/' onClick={logout}>Logout</Link></li>
         </ul>
         <i className="mobile-nav-toggle d-xl-none bi bi-list" style={{fontSize:40}}></i>
       </nav>

@@ -28,6 +28,8 @@ import ScrollToTop from './components/ScrollToTop';
 import StudentCertificate from './pages/StudentCertificate';
 import PublicRoute from './utils/PublicRoute';
 import EditFranchise from './pages/EditFranchise'
+import LiveClassRegistration from './pages/LiveClass'
+import CoursesGrid from './pages/LiveCouses'
 
 
 function App() {
@@ -103,10 +105,12 @@ return (
           <Route path='/software-course' element={<SoftwareCourse/>} />
           <Route path='/hardware-course' element={<HardwareCourse/>} />
           <Route path='/apply-franchise' element={<FranchiseApplyForm/>}/>
-          <Route path='/franchise-req' element={<FranchiseList/>}/>
+          {/* <Route path='/franchise-req' element={<FranchiseList/>}/> */}
           <Route path='/gallery' element={<Gallery/>}/>
           <Route path='/change-password' element={<ChangePassword/>}/>
           <Route path='/reset-password' element={<ResetPassword/>}/>
+          <Route path='/live-classes' element={<LiveClassRegistration/>}/>
+          {/* <Route path='/live-classes/:id' element={<LiveClassRegistration/>}/> */}
           {/* <Route path='/certificate' element={<StudentCertificate/>}/> */}
           
           {/* Protected Routes */}

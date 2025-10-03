@@ -72,6 +72,7 @@ const StudentRegistrationForm = ({ editMode = false }) => {
              setImagePreview(student.imageUpload);
           }
         } catch (error) {
+          console.log("error",error)
           toast.error("Failed to fetch student details");
         }
       }
