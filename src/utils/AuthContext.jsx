@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
     return stored ? JSON.parse(stored) : null;
   });
   const [loading, setLoading] = useState(false);
+  const [certificateReq,setcertificateReq] = useState(0)
 
   useEffect(() => {
     if (session) {
@@ -22,7 +23,7 @@ export function AuthProvider({ children }) {
   const logout = () => setSession(null);
 
   return (
-    <AuthContext.Provider value={{ session, isAuthenticated:!!session, login, logout, loading, setLoading }}>
+    <AuthContext.Provider value={{ session, isAuthenticated:!!session, login, logout, loading, setLoading,certificateReq,setcertificateReq }}>
       {children}
     </AuthContext.Provider>
   );

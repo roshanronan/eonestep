@@ -30,6 +30,9 @@ import PublicRoute from './utils/PublicRoute';
 import EditFranchise from './pages/EditFranchise'
 import LiveClassRegistration from './pages/LiveClass'
 import CoursesGrid from './pages/LiveCouses'
+import CertificateReqested from './pages/CertificateReqested'
+import AddLiveCourse from './pages/AddLiveCourse'
+import InstructorList from './pages/AddInstructor'
 
 
 function App() {
@@ -109,8 +112,8 @@ return (
           <Route path='/gallery' element={<Gallery/>}/>
           <Route path='/change-password' element={<ChangePassword/>}/>
           <Route path='/reset-password' element={<ResetPassword/>}/>
-          <Route path='/live-classes' element={<LiveClassRegistration/>}/>
-          {/* <Route path='/live-classes/:id' element={<LiveClassRegistration/>}/> */}
+          <Route path='/live-classes' element={<CoursesGrid/>}/>
+          <Route path='/live-classes/:id' element={<LiveClassRegistration/>}/>
           {/* <Route path='/certificate' element={<StudentCertificate/>}/> */}
           
           {/* Protected Routes */}
@@ -127,6 +130,27 @@ return (
           <Route path='/admin-dashboard' element={
             <ProtectedRoute roles="admin">
               <AdminDashboard/>
+            </ProtectedRoute>
+          }/>
+           <Route path='/add-live-course' element={
+            <ProtectedRoute roles="admin">
+              <AddLiveCourse/>
+            </ProtectedRoute>
+          }/>
+
+           <Route path='/edit-live-course' element={
+            <ProtectedRoute roles="admin">
+              <AddLiveCourse editMode={true}/>
+            </ProtectedRoute>
+          }/>
+           <Route path='/add-instructor' element={
+            <ProtectedRoute roles="admin">
+             <InstructorList/>
+            </ProtectedRoute>
+          }/>
+           <Route path='/certificate-req' element={
+            <ProtectedRoute roles="admin">
+              <CertificateReqested/>
             </ProtectedRoute>
           }/>
           <Route path='/edit-franchise/:id' element={

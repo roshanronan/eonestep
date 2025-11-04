@@ -1,23 +1,68 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Form } from 'react-bootstrap';
 import { validate } from '../utils/formValidation';
+import { useLocation } from 'react-router-dom';
+import apiService from '../utils/apiService';
+import { toast } from 'react-toastify';
+
+export function formatDateToReadable(dateString) {
+  const date = new Date(dateString);
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
+}
+
+export function formatTimeToReadable(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleTimeString('en-US', { 
+    hour: 'numeric', 
+    minute: '2-digit',
+    hour12: true,
+  });
+}
+
+export function getHourMinuteDifference(startTime, endTime) {
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+  const diffMs = end - start;
+
+  const hours = Math.floor(diffMs / (1000 * 60 * 60));
+  const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  return `${hours} Hours ${minutes} Mins`;
+}
 
 const LiveClassRegistration = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
-    phone: '',
-    // experience: 'beginner'
+    phoneNumber: '',
+    level: 'beginner'
   });
+
   const [showPayment, setShowPayment] = useState(false);
   const [isRegistered, setIsRegistered] = useState(false);
   const [errors, setErrors] = useState({})
   const registrationValidationRule = {
-    name: { required: true, minLength: 3, message: 'Full Name is required' },
-    phone: { required: true, pattern: /^\d{10}$/, message: 'Phone must be 10 digits' },
+    fullName: { required: true, minLength: 3, message: 'Full Name is required' },
+    phoneNumber: { required: true, pattern: /^\d{10}$/, message: 'Phone must be 10 digits' },
     email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Email is invalid' }
   };
+  const {state} = useLocation()
+  const {courseDetail} = state
+  const [intructor,setInstructor] = useState({})
+  const [loading,setLoading] = useState(false)
 
+  const getInstructor = () => {
+        apiService.get(`/instructors/${courseDetail.instructorId}`).then(response => {
+            setInstructor(response.data);
+        }).catch(error => {
+            console.error('Error fetching instructors data:', error);
+        });
+    }
+
+    useEffect(()=>{
+        getInstructor()
+    },[])
 
   const handleInputChange = (e) => {
     setFormData({
@@ -32,17 +77,40 @@ const LiveClassRegistration = () => {
 
   const handleRegistration = () => {
      const newErrors = validate(formData, registrationValidationRule);
-    
-        setErrors(newErrors);
-    if (formData.name && formData.email && formData.phone) {
-      setShowPayment(true);
+     setErrors(newErrors);
+     if (Object.keys(newErrors).length === 0) {
+      try {
+        setLoading(true);
+let payload = {...formData,liveCourseId:courseDetail.id}
+
+ apiService.post(`/livestudents`,  payload)
+          .then(response => {
+            toast.success(response?.message || 'Registration successfull!');
+            setLoading(false);
+            setShowPayment(true);
+          })
+          .catch(error => {
+            setLoading(false);
+            console.error('Error submitting form:', error);
+            toast.error(error?.message || 'Failed to Registration application. Please try again.');
+          });
+      
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    }else{
+      toast.error("Please fill the required field(s)")
     }
+
+    // if (formData.name && formData.email && formData.phonenumber) {
+    //   // setShowPayment(true);
+    // }
   };
 
   const handlePayment = () => {
     const upiId = 'instructor@paytm';
-    const amount = '999';
-    const name = 'Live React Masterclass';
+    const amount = courseDetail.price;
+    const name = courseDetail.title;
     const upiUrl = `upi://pay?pa=${upiId}&am=${amount}&cu=INR&tn=${encodeURIComponent(name)}`;
 
     // Try to open UPI app
@@ -293,9 +361,9 @@ const LiveClassRegistration = () => {
           </p>
           <div style={{ background: 'rgba(255,255,255,0.2)', padding: '20px', borderRadius: '10px' }}>
             <p><strong>Class Details:</strong></p>
-            <p>📅 Date: December 15, 2024</p>
-            <p>🕒 Time: 7:00 PM - 9:00 PM IST</p>
-            <p>💻 Platform: Zoom (Link will be emailed)</p>
+            <p>📅 Date: {formatDateToReadable(courseDetail.startTime)}</p>
+            <p>🕒 Time: {formatTimeToReadable(courseDetail.startTime)} - {formatTimeToReadable(courseDetail.endTime)} IST</p>
+            <p>💻 Platform: Zoom/Google (Link will be emailed)</p>
           </div>
         </div>
       </div>
@@ -312,14 +380,14 @@ const LiveClassRegistration = () => {
       </div> */}
       <div style={styles.hero}>
         <div style={styles.heroContent}>
-          <h1 style={styles.heroTitle}>Live React Masterclass</h1>
-          <p style={styles.heroSubtitle}>Master Modern React Development in 2 Hours</p>
+          <h1 style={styles.heroTitle}>{courseDetail.title}</h1>
+          <p style={styles.heroSubtitle}>{courseDetail.subtitle}</p>
           <div style={styles.badge}>🔴 LIVE SESSION</div>
         </div>
         <div style={styles.heroThumbnail}>
           <div style={styles.thumbnailWrapper} onClick={() => window.open('https://www.youtube.com/watch?v=sFBsdKYE3FY', '_blank')}>
             <img
-              src="https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg"
+              src={courseDetail.thumbnail}
               alt="Masterclass Preview"
               style={styles.thumbnail}
             />
@@ -342,28 +410,28 @@ const LiveClassRegistration = () => {
               <span style={styles.icon}>📅</span>
               <div>
                 <strong>Date:</strong><br />
-                December 15, 2024
+                {formatDateToReadable(courseDetail.startTime)}
               </div>
             </div>
             <div style={styles.infoItem}>
               <span style={styles.icon}>🕒</span>
               <div>
                 <strong>Time:</strong><br />
-                7:00 PM - 9:00 PM IST
+                {formatTimeToReadable(courseDetail.startTime)} - {formatTimeToReadable(courseDetail.endTime)} IST
               </div>
             </div>
             <div style={styles.infoItem}>
               <span style={styles.icon}>💻</span>
               <div>
                 <strong>Platform:</strong><br />
-                Zoom Meeting
+                Zoom Meeting / Google Meeting
               </div>
             </div>
             <div style={styles.infoItem}>
               <span style={styles.icon}>👥</span>
               <div>
                 <strong>Seats:</strong><br />
-                Limited to 50 students
+                Limited to {courseDetail.seats} students
               </div>
             </div>
             <div style={styles.infoItem}>
@@ -377,7 +445,7 @@ const LiveClassRegistration = () => {
               <span style={styles.icon}>⏱️</span>
               <div>
                 <strong>Duration:</strong><br />
-                2 Hours Interactive Session
+                {getHourMinuteDifference(courseDetail.startTime,courseDetail.endTime)} Interactive Session
               </div>
             </div>
           </div>
@@ -387,30 +455,11 @@ const LiveClassRegistration = () => {
         <div style={styles.card}>
           <h3 style={styles.cardTitle}>🎯 What You'll Learn</h3>
           <ul style={styles.features}>
-            <li style={styles.featureItem}>
+            {courseDetail.topicToLearn.split(',').map((item,idx)=>
+            <li style={styles.featureItem} key={idx}>
               <span style={styles.checkIcon}>✅</span>
-              React Hooks & State Management
-            </li>
-            <li style={styles.featureItem}>
-              <span style={styles.checkIcon}>✅</span>
-              Component Architecture Best Practices
-            </li>
-            <li style={styles.featureItem}>
-              <span style={styles.checkIcon}>✅</span>
-              API Integration & Data Fetching
-            </li>
-            <li style={styles.featureItem}>
-              <span style={styles.checkIcon}>✅</span>
-              Performance Optimization Techniques
-            </li>
-            <li style={styles.featureItem}>
-              <span style={styles.checkIcon}>✅</span>
-              Real-world Project Building
-            </li>
-            <li style={styles.featureItem}>
-              <span style={styles.checkIcon}>✅</span>
-              Q&A Session with Expert
-            </li>
+              {item}
+            </li>)}
           </ul>
         </div>
       </div>
@@ -421,30 +470,21 @@ const LiveClassRegistration = () => {
           <div style={styles.card}>
             <h3 style={styles.cardTitle}>📝 Register Now</h3>
             <div style={styles.form}>
-              {/* <input
-                type="text"
-                name="name"
-                placeholder="Full Name *"
-                value={formData.name}
-                onChange={handleInputChange}
-                style={styles.input}
-                required
-              /> */}
               <Row>
                 <Col >
                   <Form.Group>
                     <Form.Control
                       type="text"
-                      name="name"
+                      name="fullName"
                       placeholder="Full Name *"
-                      value={formData.name}
+                      value={formData.fullName}
                       onChange={handleInputChange}
                       style={styles.input}
                       required
-                      isInvalid={!!errors.name}
+                      isInvalid={!!errors.fullName}
                     />
                     <Form.Control.Feedback type="invalid">
-                      {errors.name}
+                      {errors.fullName}
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Col>
@@ -472,36 +512,44 @@ const LiveClassRegistration = () => {
                   <Form.Group>
                     <Form.Control
                       type="tel"
-                name="phone"
+                name="phoneNumber"
                 placeholder="Phone Number *"
-                value={formData.phone}
+                value={formData.phoneNumber}
                 onChange={handleInputChange}
                 style={styles.input}
-                      isInvalid={!!errors.phone}
+                      isInvalid={!!errors.phoneNumber}
                     />
                     <Form.Control.Feedback type="invalid">
-                      {errors.phone}
+                      {errors.phoneNumber}
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Col>
               </Row>
-              <select
-                name="experience"
-                value={formData.experience}
+              
+               <Row>
+                <Col >
+                  <Form.Group>
+               <Form.Select  
+                name="level"
+                value={formData.level}
                 onChange={handleInputChange}
-                style={styles.select}
-              >
-                <option value="beginner">Beginner</option>
+               style={styles.input} 
+               >
+              <option value="beginner">Beginner</option>
                 <option value="intermediate">Intermediate</option>
                 <option value="advanced">Advanced</option>
-              </select>
+    </Form.Select>
+    </Form.Group>
+                </Col>
+              </Row>
+              
               <button
                 onClick={handleRegistration}
                 style={styles.button}
                 onMouseOver={(e) => e.target.style.transform = 'translateY(-2px)'}
                 onMouseOut={(e) => e.target.style.transform = 'translateY(0)'}
               >
-                Proceed to Payment
+                Proceed to Payment  {loading && <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>}
               </button>
             </div>
           </div>
@@ -511,13 +559,13 @@ const LiveClassRegistration = () => {
         {showPayment && (
           <div style={{ ...styles.card, ...styles.paymentCard }}>
             <h3 style={styles.paymentTitle}>💳 Complete Payment</h3>
-            <div style={styles.price}>₹999</div>
-            <div style={styles.originalPrice}>₹1,999</div>
+            <div style={styles.price}>{courseDetail.price}</div>
+            <div style={styles.originalPrice}>₹{courseDetail.price + courseDetail.price}</div>
             <p style={{ marginBottom: '30px', fontSize: '1.1rem' }}>
               🎁 Early Bird Discount - 50% OFF!
             </p>
             <p style={{ marginBottom: '20px' }}>
-              <strong>Student:</strong> {formData.name}
+              <strong>Student:</strong> {formData.fullName}
             </p>
             <button
               onClick={handlePayment}
@@ -551,21 +599,21 @@ const LiveClassRegistration = () => {
             }}>
               👨‍💻
             </div>
-            <h4 style={{ marginBottom: '10px' }}>Rahul Sharma</h4>
+            <h4 style={{ marginBottom: '10px' }}>{intructor?.fullName}</h4>
             <p style={{ color: '#666', marginBottom: '20px' }}>Senior React Developer</p>
           </div>
           <ul style={styles.features}>
             <li style={styles.featureItem}>
               <span style={styles.checkIcon}>⭐</span>
-              5+ years React experience
+             {intructor?.experience}+ years React experience
             </li>
             <li style={styles.featureItem}>
               <span style={styles.checkIcon}>⭐</span>
-              1000+ students taught
+              {intructor?.studentsTaught}+ students taught
             </li>
             <li style={styles.featureItem}>
               <span style={styles.checkIcon}>⭐</span>
-              4.9/5 rating
+              {intructor?.rating}/5 rating
             </li>
           </ul>
         </div>
@@ -579,9 +627,9 @@ const LiveClassRegistration = () => {
         background: '#f8f9fa',
         borderRadius: '10px'
       }}>
-        <p style={{ margin: '0', color: '#666' }}>
+        {/* <p style={{ margin: '0', color: '#666' }}>
           🔒 Secure Payment | 📧 Email Support | 📱 Mobile Friendly
-        </p>
+        </p> */}
       </div>
     </div>
   );

@@ -40,6 +40,7 @@ const StudentRegistrationForm = ({ editMode = false }) => {
   const { session,loading,setLoading } = useAuth();
   const { state } = useLocation();
   const studentId = state?.student?.id || null;
+  
   useEffect(() => {
     if (editMode && studentId) {
       async function fetchStudent() {
@@ -72,7 +73,7 @@ const StudentRegistrationForm = ({ editMode = false }) => {
              setImagePreview(student.imageUpload);
           }
         } catch (error) {
-          console.log("error",error)
+
           toast.error("Failed to fetch student details");
         }
       }
@@ -81,7 +82,6 @@ const StudentRegistrationForm = ({ editMode = false }) => {
   }, [editMode, studentId]);
  const injectionPattern = /(<script.*?>.*?<\/script.*?>)|(;|--|\b(select|update|delete|insert|drop|alter|create|truncate|exec|union|sleep)\b)/i;
  
-
 
   const handleInputChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -113,8 +113,6 @@ const StudentRegistrationForm = ({ editMode = false }) => {
       }));
     }
   };
-
-  
 
   const validateForm = () => {
     const newErrors = {};

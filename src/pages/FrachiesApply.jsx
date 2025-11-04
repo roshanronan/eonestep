@@ -58,7 +58,7 @@ const validationRules = {
   totalCoverArea: { required: true, message: 'Total Cover area is required' },
   totalComputer: { required: true, message: 'Total Computer count is required' },
   totalStaff: { required: true, message: 'Total Staff count is required' },
-  secretarySign: { required: true, message: 'Secretary Sign is required' },
+  secretarySign: { required: true, message: 'Exam Controller Sign is required' },
 };
 
 const FranchiseApplyForm = ({ editMode = false }) => {
@@ -448,7 +448,7 @@ const FranchiseApplyForm = ({ editMode = false }) => {
 
                   <div className="row">
                     <div className="col-md-4 mb-3">
-                      <label htmlFor="secretarySign" className="form-label">Secretary Sign*</label>
+                      <label htmlFor="secretarySign" className="form-label">Exam Controller Sign*</label>
                       <input
                         type="file"
                         className={`form-control ${errors.secretarySign ? 'is-invalid' : ''}`}
@@ -472,7 +472,7 @@ const FranchiseApplyForm = ({ editMode = false }) => {
                         </div>
                       )}
                     </div>
-                    <div className="col-md-4 mb-3">
+                    {/* <div className="col-md-4 mb-3">
                       <label htmlFor="examinerSign" className="form-label">Examiner Sign</label>
                       <input
                         type="file"
@@ -497,8 +497,8 @@ const FranchiseApplyForm = ({ editMode = false }) => {
                           />
                         </div>
                       )}
-                    </div>
-                    <div className="col-md-4 mb-3">
+                    </div> */}
+                    {/* <div className="col-md-4 mb-3">
                       <label htmlFor="invigilatorSign" className="form-label">Inviglator Sign</label>
                       <input
                         type="file"
@@ -523,7 +523,7 @@ const FranchiseApplyForm = ({ editMode = false }) => {
                           />
                         </div>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                   {/* <div className="row">
                    <div className="col-md-4 mb-3">

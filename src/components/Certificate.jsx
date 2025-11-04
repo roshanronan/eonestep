@@ -186,7 +186,7 @@ const CertificatePDF = ({studentDetails}) => {
                 </td>
               )} */}
 
-               {
+               {/* {
                 studentDetails?.franchiseInvigilatorSign && <td style={{ textAlign: 'center' }}>
                   <img 
                     src={studentDetails?.franchiseInvigilatorSign}
@@ -194,7 +194,7 @@ const CertificatePDF = ({studentDetails}) => {
                     style={{ height: '70px', width: '150px' }}
                   />
                 </td>
-              }
+              } */}
               {/* {studentDetails?.franchiseCode === 'ESA1004' && (
                 <td style={{ textAlign: 'center' }}>
                   <img 
@@ -204,7 +204,7 @@ const CertificatePDF = ({studentDetails}) => {
                   />
                 </td>
               )} */}
-               {
+               {/* {
                 studentDetails?.franchiseExaminerSign && <td style={{ textAlign: 'center' }}>
                   <img 
                     src={studentDetails?.franchiseExaminerSign}
@@ -212,14 +212,14 @@ const CertificatePDF = ({studentDetails}) => {
                     style={{ height: '70px', width: '150px' }}
                   />
                 </td>
-              }
-              <td style={{ textAlign: 'center' }}>
+              } */}
+              {/* <td style={{ textAlign: 'center' }}>
                 <img 
                   src={uniqueEducationSign}
                   alt="Controller Signature" 
                   style={{ height: '70px', width: '150px' }}
                 />
-              </td>
+              </td> */}
               <td style={{ textAlign: 'center' }}>
                 <img 
                   src={sig_sec}
@@ -230,9 +230,9 @@ const CertificatePDF = ({studentDetails}) => {
             </tr>
             <tr>
               {/* {studentDetails?.franchiseCode === 'ESA1002' && ( */}
-                <td style={{ textAlign: 'center' }}>
+                {/* <td style={{ textAlign: 'center' }}>
                   <div>Checked by</div>
-                </td>
+                </td> */}
               {/* )} */}
               <td style={{ textAlign: 'center' }}>
                 <div>Controller of Exam</div>

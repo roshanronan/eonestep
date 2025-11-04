@@ -51,7 +51,6 @@ const FranchiseList = ({list,getFranchiseData}) => {
   };
 
   const handleOpenResetModal = (franchise) => {
-    // console.log('frachise',franchise)
     setSelectedFranchise(franchise);
     setShowResetModal(true);
     setNewPassword('');

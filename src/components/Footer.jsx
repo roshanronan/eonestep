@@ -23,8 +23,9 @@ export default function Footer() {
                        <h2 className='m-0'>Eonestep Academy</h2>
                        </div>
               <p >
-                EONESTEP in India Top Franchise Brand Free Franchise,how register open center No.1 Computer Center Education Institute in india Best computer education affiliation franchise registration
-              </p>
+              <strong> EONESTEP – India’s No.1 Computer Education Franchise.</strong><br/>
+Get free franchise registration and start your own computer training center with the best computer education affiliation in India.
+                   </p>
             </div>  
 
             {/* Contact Info Section */}

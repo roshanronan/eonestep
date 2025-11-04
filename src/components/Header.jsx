@@ -45,14 +45,14 @@ const Header = () => {
               <li><Link to="/eonestep#refundncancel">Refund & Cancellation Policy</Link></li>
             </ul>
           </li>
-          {/* <li className="dropdown"><Link href=""><span>Student Zone   <ChevronDown size={20}  /></span></Link>
+          <li className="dropdown"><Link href=""><span>Student Zone   <ChevronDown size={20}  /></span></Link>
             <ul>
               <li><Link href="">Student Verification</Link></li>
               <li><Link href="">Student Login</Link></li>
              
             </ul>
-          </li> */}
-           <li className="dropdown"><Link to='/live-classes'><span>Live Classes</span></Link></li>
+          </li>
+           {/* <li className="dropdown"><Link to='/live-classes'><span>Live Classes</span></Link></li> */}
     
         <li><Link to='/center-login'>Center Login</Link></li>
         </ul>

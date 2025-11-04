@@ -3,22 +3,34 @@ import { Blocks, Building2, GraduationCap, TrendingUp, Users,Pencil,BadgeCheck }
 import FranchiseList from '../components/FrachiseList';
 import apiService from '../utils/apiService';
 import FullPageLoader from '../components/FullPageLoader';
+import { useAuth } from '../utils/AuthContext';
 
 const AdminDashboard = () => {
   const {user} = JSON.parse(localStorage.getItem('session')) || {};
   const [adiminData, setAdminData] = useState(null);
-  const [pageLoader,setPageLoader] = useState(false)
+  const [pageLoader,setPageLoader] = useState(false);
+  const {setcertificateReq} = useAuth();
 
   useEffect(() => {
     document.title = "Admin Dashboard - OneStep Education"
     getFranchiseData();
-    // console.log(localStorage.getItem('session'));
+    getCertificateReq();
   }, []);
+
+  const getCertificateReq = () =>{
+    setPageLoader(true)
+    apiService.get('/students/certificate-request').then(response => {
+      setcertificateReq(response.data)
+      setPageLoader(false)
+    }).catch(error => {
+        setPageLoader(false)
+      console.error('Error fetching certificate request data:', error);
+    });
+  }
 
   const getFranchiseData = () => {
     setPageLoader(true)
     apiService.get('/franchise').then(response => {
-      // console.log('Franchise Data:', response.data);
       // Handle the response data as needed
       setAdminData(response.data);
       setPageLoader(false)
@@ -47,7 +59,7 @@ const AdminDashboard = () => {
       changeType: 'positive'
     },
     {
-      title: 'Active Franchise Partners',
+      title: 'Active Franchise',
       value: adiminData?.FranchisesData.approvedFranchises,
       icon: Users,
       color: 'text-info',

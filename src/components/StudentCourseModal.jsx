@@ -32,7 +32,6 @@ const StudentCourseModal = ({ showModal, setShowModal, toggleShowModal, id }) =>
         const getStudentDetails = async () => {
             const response = await apiService.get(`/students/${id}/course-details`)
             const marks = response?.data?.student
-            console.log("marks",marks)
             setFormData({
                 studentName: marks.studentName,
                 fatherName: marks.fatherName,
@@ -80,7 +79,7 @@ const StudentCourseModal = ({ showModal, setShowModal, toggleShowModal, id }) =>
         } catch (error) {
             console.error('Login faileddd:', error);
             setLoading(false);
-            toast.error(error?.message || 'Login failed. Please check your credentials.');
+            toast.error(error?.message);
             return;
         }
 

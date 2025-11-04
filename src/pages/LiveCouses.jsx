@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../utils/AuthContext';
+import apiService from '../utils/apiService';
+import { toast } from 'react-toastify';
 
-const CourseCard = ({ course }) => {
+
+const CourseCard = ({ course ,getCourses}) => {
     const navigate = useNavigate()
+   const {session} = useAuth()
   const getBadgeStyle = (status) => {
     const baseStyle = {
       display: 'inline-block',
@@ -53,10 +58,30 @@ const CourseCard = ({ course }) => {
     }
   };
 
+       const deleteCourse = async (id) => {
+ try {
+                // setLoading(true);
+                const response = await apiService.delete(`/livecourses/live-courses/${id}`);
+                toast.success(response?.message)
+                getCourses()
+                //  setLoading(false);
+            } catch (error) {
+                console.error('Deleting Course Failed:', error);
+                // setLoading(false);
+                toast.error(error?.message);
+                return;
+            }
+    }
+
+    const editCourse = (courseDetail)=>{
+        navigate('/edit-live-course',{state:{courseDetail}})
+    }
+  
+
   return (
-    <div style={styles.card} onClick={()=>navigate(`/live-classes/${course.id}`)}>
+    <div style={styles.card} >
       <div style={styles.imageContainer}>
-        <img src={course.image} alt={course.title} style={styles.image} />
+        <img src={course.thumbnail} alt={course.title} style={styles.image} />
         <div style={styles.badgeContainer}>
           <span style={getBadgeStyle(course.status)}>
             {getBadgeIcon(course.status)} {course.status}
@@ -67,8 +92,22 @@ const CourseCard = ({ course }) => {
         <h3 style={styles.title}>{course.title}</h3>
         <p style={styles.description}>{course.description}</p>
         <div style={styles.footer}>
-          <span style={styles.duration}>⏱️ {course.duration}</span>
-          <span style={styles.level}>📊 {course.level}</span>
+          { session?.user?.role == 'admin' ? <div className='d-flex gap-2'>
+          <span style={styles.duration} className='bg-danger text-light p-1 rounded' onClick={()=>deleteCourse(course.id)}>
+          Delete <i className="bi bi-trash me-1"></i> 
+          </span>
+           <span style={styles.duration} className='bg-success text-light py-1 px-2 rounded' onClick={()=>editCourse(course)}>
+          Edit <i className="bi bi-pencil me-1"></i> 
+          </span>
+          <span style={styles.duration} className='bg-info text-light py-1 px-2 rounded'  onClick={()=>navigate(`/live-classes/${course.id}`,{state:{courseDetail:course}})}>
+          Learn More  <i className="bi bi-chevron-double-right me-1"></i>
+          </span>
+          </div>:
+          <span style={styles.duration} className='bg-info text-light py-1 px-2 rounded'  onClick={()=>navigate(`/live-classes/${course.id}`,{state:{courseDetail:course}})}>
+           Learn More
+          </span>
+          }
+          {/* <span style={styles.level }>📊 {course.level}</span> */}
         </div>
       </div>
     </div>
@@ -76,6 +115,8 @@ const CourseCard = ({ course }) => {
 };
 
 const CoursesGrid = () => {
+  const {session} = useAuth();
+  const navigate = useNavigate()
   const courses = [
     {
       id: 1,
@@ -132,16 +173,30 @@ const CoursesGrid = () => {
       level: 'Advanced',
     },
   ];
+  const [courseList,setCourseList] = useState([])
+
+  useEffect(()=>{
+      getCourses()
+  },[])
+
+  const getCourses = () => {
+        apiService.get('/livecourses/live-courses').then(response => {
+            setCourseList(response.data);
+        }).catch(error => {
+            console.error('Error fetching courses data:', error);
+        });
+    }
 
   return (
     <div style={styles.container}>
       <div style={styles.header}>
         <h1 style={styles.mainTitle}>Our Courses</h1>
         <p style={styles.subtitle}>Choose from our selection of expert-led courses</p>
+       {session?.user?.role === 'admin' && <button className='btn btn-primary' onClick={()=>navigate('/add-live-course')}> Add Live Course</button>}
       </div>
       <div style={styles.grid}>
-        {courses.map((course) => (
-          <CourseCard key={course.id} course={course} />
+        {courseList.map((course) => (
+          <CourseCard key={course.id} course={course} getCourses ={getCourses}/>
         ))}
       </div>
     </div>
@@ -183,7 +238,7 @@ const styles = {
     overflow: 'hidden',
     boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-    cursor: 'pointer',
+    // cursor: 'pointer',
   },
   imageContainer: {
     position: 'relative',
@@ -194,7 +249,7 @@ const styles = {
   image: {
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
+    objectFit: 'contain',
     transition: 'transform 0.3s ease',
   },
   badgeContainer: {
@@ -229,25 +284,27 @@ const styles = {
     fontSize: '14px',
     color: '#34495e',
     fontWeight: '500',
+    cursor: 'pointer',
   },
   level: {
     fontSize: '14px',
     color: '#34495e',
     fontWeight: '500',
+    textTransform:'capitalize'
   },
 };
 
 // Add hover effect
-const styleSheet = document.createElement('style');
-styleSheet.textContent = `
-  [style*="cursor: pointer"]:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3) !important;
-  }
-  [style*="cursor: pointer"]:hover img {
-    transform: scale(1.1);
-  }
-`;
-document.head.appendChild(styleSheet);
+// const styleSheet = document.createElement('style');
+// styleSheet.textContent = `
+//   [style*="cursor: pointer"]:hover {
+//     transform: translateY(-8px);
+//     box-shadow: 0 15px 40px rgba(0,0,0,0.3) !important;
+//   }
+//   [style*="cursor: pointer"]:hover img {
+//     transform: scale(1.1);
+//   }
+// `;
+// document.head.appendChild(styleSheet);
 
 export default CoursesGrid;
