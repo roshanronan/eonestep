@@ -3,7 +3,7 @@ import apiService from '../utils/apiService';
 import { toast } from "react-toastify";
 import { validate } from '../utils/formValidation';
 import { useAuth } from '../utils/AuthContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const injectionPattern = /(<script.*?>.*?<\/script.*?>)|(;|--|\b(select|update|delete|insert|drop|alter|create|truncate|exec|union|sleep)\b)/i;
 
@@ -69,6 +69,7 @@ const FranchiseApplyForm = ({ editMode = false }) => {
   const [examinerSignPreview, setExaminerSignPreview] = useState(null);
   const { loading, setLoading, session } = useAuth();
   const { id } = useParams();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (editMode && id) {
@@ -209,6 +210,7 @@ const FranchiseApplyForm = ({ editMode = false }) => {
           .then(response => {
             toast.success(response?.message || 'Application Updated successfully!');
             setLoading(false);
+            navigate(-1)
           })
           .catch(error => {
             setLoading(false);
@@ -227,6 +229,7 @@ const FranchiseApplyForm = ({ editMode = false }) => {
             setExaminerSignPreview(null)
             setInvigilatorSignPreview(null)
             setLoading(false);
+            navigate(-1)
           })
           .catch(error => {
             setLoading(false);
