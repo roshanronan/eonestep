@@ -38,11 +38,11 @@ const Header = () => {
               <li><Link to="/hardware-course">Computer Hardware</Link></li>
             </ul>
           </li>
-          <li className="dropdown"><Link to="/eonestep#about"><span>About   <ChevronDown size={20}  /></span></Link>
+          <li className="dropdown"><Link to="#about"><span>About   <ChevronDown size={20}  /></span></Link>
             <ul>
-              <li><Link to="/eonestep#about">About Us</Link></li>
-              <li><Link to="/eonestep#affiliation">Affiliation Process</Link></li>
-              <li><Link to="/eonestep#refundncancel">Refund & Cancellation Policy</Link></li>
+              <li><Link to="#about">About Us</Link></li>
+              <li><Link to="#affiliation">Affiliation Process</Link></li>
+              <li><Link to="#refundncancel">Refund & Cancellation Policy</Link></li>
             </ul>
           </li>
           <li className="dropdown"><Link href=""><span>Student Zone   <ChevronDown size={20}  /></span></Link>

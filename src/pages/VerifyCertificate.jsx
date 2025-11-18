@@ -278,7 +278,7 @@ async function convertImagesToBase64(element) {
               <div className="login-form-section">
                 <div className="w-100">
                   <div className="welcome-text">Welcome to Certificate Verification</div>
-                  <div className="subtitle">Download Result eonestep</div>
+                  <div className="subtitle">Download Result EONESTEP</div>
                   
                   <div>
                     <div className="mb-3">

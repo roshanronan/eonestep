@@ -22,7 +22,7 @@ import StudentRegistrationForm from './components/RegisterStudent';
 import Gallery from './components/Gallery';
 import ChangePassword from './pages/ChangePassword';
 import ResetPassword from './pages/ResetPassword'
-import { ToastContainer } from "react-toastify";
+  import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from './components/ScrollToTop';
 import StudentCertificate from './pages/StudentCertificate';
@@ -163,7 +163,7 @@ return (
               <CenterDashboard/>
             </ProtectedRoute>
           }/>
-          
+            
           <Route path='*' element={<NotFound/>}/>
       </Routes>
       <Footer/>

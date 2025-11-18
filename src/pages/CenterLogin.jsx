@@ -264,7 +264,7 @@ export default function CenterLogin() {
               <div className="login-form-section">
                 <div className="w-100">
                   <div className="welcome-text">Welcome to Center Login</div>
-                  <div className="subtitle">sign in continue to eonestep</div>
+                  <div className="subtitle">Sign into EONESTEP</div>
                   
                   <div>
                     <div className="mb-3">

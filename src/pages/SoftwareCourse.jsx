@@ -12,7 +12,7 @@ const SoftwareCourse = () => {
     "students": 215,
     "title": "CERTIFICATE IN COMPUTER FUNDAMENTALS",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Ms Office (Word, Excel, Power Point).",
+    "description": "Computer Fundamentals, Operating System, Ms Office (Word, Excel, Power Point).",
     "duration": "3 Month"
   },
   {
@@ -22,7 +22,7 @@ const SoftwareCourse = () => {
     "students": 411,
     "title": "CERTIFICATE IN OFFICE AUTOMATION",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Ms Office (Word, Excel), Internet.",
+    "description": "Computer Fundamentals, Operating System, Ms Office (Word, Excel), Internet.",
     "duration": "3 Month"
   },
   {
@@ -71,9 +71,9 @@ const SoftwareCourse = () => {
     "lessons": 12,
     "rating": 2,
     "students": 334,
-    "title": "CERTIFICATE IN WINDOWS 7",
+    "title": "CERTIFICATE IN Operating System",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7.",
+    "description": "Computer Fundamentals, Operating System.",
     "duration": "3 Month"
   },
   {
@@ -363,7 +363,7 @@ const SoftwareCourse = () => {
     "students": 163,
     "title": "ADVANCE DIPLOMA IN INFORMATION TECHNOLOGY",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Office 2010 (Word, Excel, Access, Power Point), Pagemaker, Coral Draw, Photoshop, Tally, Hardware Concept, Internet",
+    "description": "Computer Fundamentals, Operating System, Office 2010 (Word, Excel, Access, Power Point), Pagemaker, Coral Draw, Photoshop, Tally, Hardware Concept, Internet",
     "duration": "12 Month"
   },
   {
@@ -393,7 +393,7 @@ const SoftwareCourse = () => {
     "students": 223,
     "title": "ADVANCE DIPLOMA IN COMPUTER SOFTWARE SYSTEM ANALYSIS & APPLICATION",
     "part": "",
-    "description": "Computer Basics, Windows 7, MS Office 2010 (Word, Excel, Access, Power Point), Internet, Photo Shop, HTML, CSS, Language C, C++, Structural Analysis, Prgramming Concept, PHP, MySQL, Oracle, Data Base Management",
+    "description": "Computer Basics, Operating System, MS Office 2010 (Word, Excel, Access, Power Point), Internet, Photo Shop, HTML, CSS, Language C, C++, Structural Analysis, Prgramming Concept, PHP, MySQL, Oracle, Data Base Management",
     "duration": "12 Month"
   },
   {
@@ -403,7 +403,7 @@ const SoftwareCourse = () => {
     "students": 271,
     "title": "ADVANCE DIPLOMA IN COMPUTER APPLICATION & PROGRAMMING",
     "part": "",
-    "description": "Computer Basics, Windows 7, MS Office 2010 (Word, Excel, Access Power Point), Internet, Photo Shop, HTML, CSS, Language C, C++, Structural Analysis, Prgramming Concept, PHP, Data Base Management",
+    "description": "Computer Basics, Operating System, MS Office 2010 (Word, Excel, Access Power Point), Internet, Photo Shop, HTML, CSS, Language C, C++, Structural Analysis, Prgramming Concept, PHP, Data Base Management",
     "duration": "12 Month"
   },
   {
@@ -433,7 +433,7 @@ const SoftwareCourse = () => {
     "students": 112,
     "title": "YEAR DIPLOMA IN COMPUTER APPLICATION",
     "part": "",
-    "description": "Computer Fundamentals, DOS, Windows 7, Ms Office 2010 (Word, Excel, Power Point, Access), English Typing, Regional Typing, HTML, C Programming, Internet",
+    "description": "Computer Fundamentals, DOS, Operating System, Ms Office 2010 (Word, Excel, Power Point, Access), English Typing, Regional Typing, HTML, C Programming, Internet",
     "duration": "12 Month"
   },
   {
@@ -443,7 +443,7 @@ const SoftwareCourse = () => {
     "students": 343,
     "title": "YEAR DIPLOMA IN FINANCIAL ACCOUNTING",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Accounting Concept, Tally, Others Accounting Package, Internet..",
+    "description": "Computer Fundamentals, Operating System, Accounting Concept, Tally, Others Accounting Package, Internet..",
     "duration": "12 Month"
   },
   {
@@ -453,7 +453,7 @@ const SoftwareCourse = () => {
     "students": 378,
     "title": "ADVANCE DIPLOMA IN HARDWARE & NETWORKING PROFESSIONAL",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Construction & Functioning of Different PC Parts (Monitor, Mother Board, Hard Disk, CD-ROM etc.), Software Installation, Troubleshooting,LAN,Networking etc",
+    "description": "Computer Fundamentals, Operating System, Construction & Functioning of Different PC Parts (Monitor, Mother Board, Hard Disk, CD-ROM etc.), Software Installation, Troubleshooting,LAN,Networking etc",
     "duration": "12 Month"
   },
   {
@@ -463,7 +463,7 @@ const SoftwareCourse = () => {
     "students": 127,
     "title": "ADVANCE DIPLOMA IN COMPUTER TEACHER TRAINING PROGRAM",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Typing Master, Nudi 4.0,Ms Office 2010 (Word, Excel, Power Point, Access), Internet, Business Communication, C, C++, VB, Oracle, Java, HTML",
+    "description": "Computer Fundamentals, Operating System, Typing Master, Nudi 4.0,Ms Office 2010 (Word, Excel, Power Point, Access), Internet, Business Communication, C, C++, VB, Oracle, Java, HTML",
     "duration": "12 Month"
   },
   {
@@ -493,7 +493,7 @@ const SoftwareCourse = () => {
     "students": 212,
     "title": "DIPLOMA IN MULTIMEDIA",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Photoshop, Corel Draw, Flash, Premiere, After Effects, Sound Forge, 3Ds Max",
+    "description": "Computer Fundamentals, Operating System, Photoshop, Corel Draw, Flash, Premiere, After Effects, Sound Forge, 3Ds Max",
     "duration": "12 Month"
   },
   {
@@ -513,7 +513,7 @@ const SoftwareCourse = () => {
     "students": 241,
     "title": "ADVANCE DIPLOMA IN DESK TOP PUBLISHING",
     "part": "",
-    "description": "Semester - 1 : Computer Concept & Fundamentals, Opperating System (Windows XP, windows 7), MS Office (Word,Excel,Power Point), Regional Typing, Introduction to Internet & Emaill. Semester - 2 : Page Maker, Croel Draw, Photo Shop, Free Hand, Project Work & Practical.",
+    "description": "Semester - 1 : Computer Concept & Fundamentals, Opperating System (Windows XP, Operating System), MS Office (Word,Excel,Power Point), Regional Typing, Introduction to Internet & Emaill. Semester - 2 : Page Maker, Croel Draw, Photo Shop, Free Hand, Project Work & Practical.",
     "duration": "12 Month"
   },
   {
@@ -543,7 +543,7 @@ const SoftwareCourse = () => {
     "students": 237,
     "title": "ADVANCED DIPLOMA IN IT APLICATION",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Ms -Paint, Notepad, Wordpad, English Typing using Typing Master, Bangla Word, Ms Office (Word, Excel, Access, Power Point), Internet, Scanner & Printer Handling.",
+    "description": "Computer Fundamentals, Operating System, Ms -Paint, Notepad, Wordpad, English Typing using Typing Master, Bangla Word, Ms Office (Word, Excel, Access, Power Point), Internet, Scanner & Printer Handling.",
     "duration": "12 Month"
   },
   {
@@ -573,7 +573,7 @@ const SoftwareCourse = () => {
     "students": 119,
     "title": "ADVANCE DIPLOMA IN COMPUTER TECHNOLOGY",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Office 2010 (Word, Excel, Power Point, Access), Regional Typing, Photoshop 7, Video Mixing, HTML, Hardware Concept & Internet.",
+    "description": "Computer Fundamentals, Operating System, Office 2010 (Word, Excel, Power Point, Access), Regional Typing, Photoshop 7, Video Mixing, HTML, Hardware Concept & Internet.",
     "duration": "12 Month"
   },
   {
@@ -593,7 +593,7 @@ const SoftwareCourse = () => {
     "students": 324,
     "title": "DIPLOMA IN COMPUTER HARDWARE",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Construction & Functioning of Different PC Parts (Monitor, Mother Board, Hard Disk, CD-ROM, Video System, Sound System, Modems etc.), Configuring the CMOS Setup, Maintenance & Troubleshooting, Software Installation, Troubleshooting,Computer Virus, LAN, Networking etc",
+    "description": "Computer Fundamentals, Operating System, Construction & Functioning of Different PC Parts (Monitor, Mother Board, Hard Disk, CD-ROM, Video System, Sound System, Modems etc.), Configuring the CMOS Setup, Maintenance & Troubleshooting, Software Installation, Troubleshooting,Computer Virus, LAN, Networking etc",
     "duration": "12 Month"
   },
   {
@@ -613,7 +613,7 @@ const SoftwareCourse = () => {
     "students": 92,
     "title": "MASTER DIPLOMA IN INFORMATION TECHNOLOGY",
     "part": "",
-    "description": "omputer Fundamentals, Ms DOS, Windows 7, Ms Office 2010 (Ms Word, Ms Excel, Ms Power Point, Ms Access) Regional Typing, Page Maker, Photoshop, Instant Artist C++, Visual Basic, Basic Concepts of Tally, HTML, Internet & E-mail",
+    "description": "omputer Fundamentals, Ms DOS, Operating System, Ms Office 2010 (Ms Word, Ms Excel, Ms Power Point, Ms Access) Regional Typing, Page Maker, Photoshop, Instant Artist C++, Visual Basic, Basic Concepts of Tally, HTML, Internet & E-mail",
     "duration": "12 Month"
   },
   {
@@ -633,7 +633,7 @@ const SoftwareCourse = () => {
     "students": 317,
     "title": "Diploma In Computer Teacher Training Certificat",
     "part": "",
-    "description": "Computer Fundamentals, Operating System - Windows 7 & DOS, Ms - Paint, Ms Office 2010 (Word, Excel, Power Point, Access), English & Regional Typing, Internet & E-Mail, HTML, Visual Basic, C++, , Instant Artist,Page Maker 6.5/7, Photoshop 7, Multimedia, Tally (Basic Concept).",
+    "description": "Computer Fundamentals, Operating System - Operating System & DOS, Ms - Paint, Ms Office 2010 (Word, Excel, Power Point, Access), English & Regional Typing, Internet & E-Mail, HTML, Visual Basic, C++, , Instant Artist,Page Maker 6.5/7, Photoshop 7, Multimedia, Tally (Basic Concept).",
     "duration": "12 Month"
   },
   {
@@ -643,7 +643,7 @@ const SoftwareCourse = () => {
     "students": 244,
     "title": "DIPLOMA IN INFORMATION TECHNOLOGY",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Ms. Paint, Wordpad, DOS, Ms. Office 2007 (Word, Excel, Power Point), HTML, Bengla Word, Visual Foxpro, English Typing, Internet.",
+    "description": "Computer Fundamentals, Operating System, Ms. Paint, Wordpad, DOS, Ms. Office 2007 (Word, Excel, Power Point), HTML, Bengla Word, Visual Foxpro, English Typing, Internet.",
     "duration": "12 Month"
   },
   {
@@ -653,7 +653,7 @@ const SoftwareCourse = () => {
     "students": 355,
     "title": "DIPLOMA IN FINANCIAL ACCOUNTING",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Ms. Paint, Wordpad, DOS, Ms Office 2007 (Word, Excel, Power Point), HTML, Bengla Word, Visual Foxpro, English Typing, Internet, Tally.",
+    "description": "Computer Fundamentals, Operating System, Ms. Paint, Wordpad, DOS, Ms Office 2007 (Word, Excel, Power Point), HTML, Bengla Word, Visual Foxpro, English Typing, Internet, Tally.",
     "duration": "12 Month"
   },
   {
@@ -673,7 +673,7 @@ const SoftwareCourse = () => {
     "students": 237,
     "title": "ADVANCE DIPLOMA IN FINANCIAL ACCOUNTIN",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, MS Office (MS Word, MS Excel, MS Power Point), Accounting Concept, Tally ERP9, Taxation, Internet",
+    "description": "Computer Fundamentals, Operating System, MS Office (MS Word, MS Excel, MS Power Point), Accounting Concept, Tally ERP9, Taxation, Internet",
     "duration": "12 Month"
   },
   {
@@ -693,7 +693,7 @@ const SoftwareCourse = () => {
     "students": 403,
     "title": "Diploma in Commercial Application",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Ms Office 2007, System Tools, Virus, Internet, MS Access, Programming in HTML, Programming in C, Accounting Concept & Tally ERP and Regional Software",
+    "description": "Computer Fundamentals, Operating System, Ms Office 2007, System Tools, Virus, Internet, MS Access, Programming in HTML, Programming in C, Accounting Concept & Tally ERP and Regional Software",
     "duration": "12 Month"
   },
   {
@@ -703,7 +703,7 @@ const SoftwareCourse = () => {
     "students": 378,
     "title": "Advanced Diploma in Commercial Application",
     "part": "",
-    "description": "Computer Fundamentals, Typing Practice, Windows 7, Ms Office 2007, System Tools, Virus, Internet, MS Access, Programming in HTML, Programming in C, Programming using Visual Basic.",
+    "description": "Computer Fundamentals, Typing Practice, Operating System, Ms Office 2007, System Tools, Virus, Internet, MS Access, Programming in HTML, Programming in C, Programming using Visual Basic.",
     "duration": "12 Month"
   },
   {
@@ -713,7 +713,7 @@ const SoftwareCourse = () => {
     "students": 329,
     "title": "Diploma in Commercial Application & Desktop Publishing",
     "part": "",
-    "description": "Computer Fundamentals, Typing Practice, Windows 7, Ms Office 2007, System Tools, Virus, Internet, MS Access, Programming in HTML, Pagemaker, Corel Draw, Photoshop, Project Work, Regional Software.",
+    "description": "Computer Fundamentals, Typing Practice, Operating System, Ms Office 2007, System Tools, Virus, Internet, MS Access, Programming in HTML, Pagemaker, Corel Draw, Photoshop, Project Work, Regional Software.",
     "duration": "12 Month"
   },
   {
@@ -733,7 +733,7 @@ const SoftwareCourse = () => {
     "students": 125,
     "title": "Diploma in Computer Teacher Training Cours",
     "part": "",
-    "description": "Computer Fundamentals, Windows 7, Ms Office 2010 (Word, Excel, PowerPoint), System Tools, Virus, Internet, HTML, DHTML, Programming in C, Visual Basic, Accounting Concept & Tally, Programming in C++, CPD.",
+    "description": "Computer Fundamentals, Operating System, Ms Office 2010 (Word, Excel, PowerPoint), System Tools, Virus, Internet, HTML, DHTML, Programming in C, Visual Basic, Accounting Concept & Tally, Programming in C++, CPD.",
     "duration": "12 Month"
   },
   {

@@ -49,12 +49,12 @@ const validationRules = {
   name: { required: true, minLength: 2, message: 'Person name is required' },
   instituteName: { required: true, minLength: 2, message: 'Institute name is required' },
   pincode: { required: true, pattern: /^\d{6}$/, message: 'Pin code must be 6 digits' },
-  town: { required: true, message: 'Town is required' },
-  city: { required: true, message: 'City is required' },
+  town: { required: true, message: 'Address is required' },
+  city: { required: true, message: 'City/Village is required' },
   state: { required: true, message: 'State is required' },
   phone: { required: true, pattern: /^\d{10}$/, message: 'Phone must be 10 digits' },
   email: { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Email is invalid' },
-  country: { required: true, message: 'Country is required' },
+  country: { required: true, message: 'Landmark/Near By is required' },
   totalCoverArea: { required: true, message: 'Total Cover area is required' },
   totalComputer: { required: true, message: 'Total Computer count is required' },
   totalStaff: { required: true, message: 'Total Staff count is required' },
@@ -305,6 +305,31 @@ const FranchiseApplyForm = ({ editMode = false }) => {
                   <h5 className="mb-2 mt-4 fw-bold">Address Information</h5>
 
                   <div className="row">
+                    
+                    <div className="col-md-4 mb-3">
+                      <label htmlFor="town" className="form-label">Address*</label>
+                      <input
+                        type="text"
+                        className={`form-control ${errors.town ? 'is-invalid' : ''}`}
+                        id="town"
+                        name="town"
+                        value={formData.town}
+                        onChange={handleChange}
+                      />
+                      {errors.town && <div className="invalid-feedback">{errors.town}</div>}
+                    </div>
+                    <div className="col-md-4 mb-3">
+                      <label htmlFor="city" className="form-label">City/Village*</label>
+                      <input
+                        type="text"
+                        className={`form-control ${errors.city ? 'is-invalid' : ''}`}
+                        id="city"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleChange}
+                      />
+                      {errors.city && <div className="invalid-feedback">{errors.city}</div>}
+                    </div>
                     <div className="col-md-4 mb-3">
                       <label htmlFor="pincode" className="form-label">Pin Code*</label>
                       <input
@@ -317,30 +342,6 @@ const FranchiseApplyForm = ({ editMode = false }) => {
                         maxLength="6"
                       />
                       {errors.pincode && <div className="invalid-feedback">{errors.pincode}</div>}
-                    </div>
-                    <div className="col-md-4 mb-3">
-                      <label htmlFor="town" className="form-label">Town*</label>
-                      <input
-                        type="text"
-                        className={`form-control ${errors.town ? 'is-invalid' : ''}`}
-                        id="town"
-                        name="town"
-                        value={formData.town}
-                        onChange={handleChange}
-                      />
-                      {errors.town && <div className="invalid-feedback">{errors.town}</div>}
-                    </div>
-                    <div className="col-md-4 mb-3">
-                      <label htmlFor="city" className="form-label">City*</label>
-                      <input
-                        type="text"
-                        className={`form-control ${errors.city ? 'is-invalid' : ''}`}
-                        id="city"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                      />
-                      {errors.city && <div className="invalid-feedback">{errors.city}</div>}
                     </div>
                   </div>
 
@@ -359,7 +360,7 @@ const FranchiseApplyForm = ({ editMode = false }) => {
                       {errors.state && <div className="invalid-feedback">{errors.state}</div>}
                     </div>
                     <div className=" col-md-4 mb-3">
-                      <label htmlFor="country" className="form-label">Country*</label>
+                      <label htmlFor="country" className="form-label">Landmark/Near By*</label>
                       <input
                         type="text"
                         className={`form-control ${errors.country ? 'is-invalid' : ''}`}

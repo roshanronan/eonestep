@@ -5,11 +5,11 @@ import logoHeader from '../assets/logo.png'
 export default function Footer() {
   return (
       <footer className="footer position-relative overflow-hidden">
-        <div className="position-absolute w-100 h-100" style={{top: 0, left: 0, zIndex: 1}}>
+        {/* <div className="position-absolute w-100 h-100" style={{top: 0, left: 0}}>
       <div className="blur-circle circle1"></div>
       <div className="blur-circle circle2"></div>
       <div className="blur-circle circle3"></div>
-        </div>
+        </div> */}
         <div className="mx-lg-5 px-lg-5 px-3 ">
     
 
@@ -54,24 +54,24 @@ Get free franchise registration and start your own computer training center with
             </div>
 
             {/* Social Media Section */}
-            <div className="col-lg-4 col-md-12 col-12 d-flex flex-column align-items-md-center">
+            <div className="col-lg-4 col-md-12 col-12 d-flex flex-column align-items-md-center z-100 align-items-start">
               <h3 className='mt-md-0 mt-3'>Social Media Handles</h3>
               
               <div className="social-icons">
                 <a 
-                  href="https://www.facebook.com/ecceducationalhub" 
+                  href="https://www.facebook.com/ecceducationalhub/" 
                   className="facebook" 
                   aria-label="Facebook"
-                  onClick={(e) => e.preventDefault()}
+                  // onClick={(e) => e.preventDefault()}
                 >
                   <Facebook size={20} />
                 </a>
                 
                 <a 
-                  href="https://www.youtube.com/c/ComputerGyan1" 
+                  href=" https://www.youtube.com/@ComputerGyan1" 
                   className="youtube" 
                   aria-label="YouTube"
-                  onClick={(e) => e.preventDefault()}
+                  // onClick={(e) => e.preventDefault()}
                 >
                   <Youtube size={20} />
                 </a>
@@ -80,19 +80,19 @@ Get free franchise registration and start your own computer training center with
                   href="https://www.instagram.com/ecceducation/" 
                   className="instagram" 
                   aria-label="Instagram"
-                  onClick={(e) => e.preventDefault()}
+                  // onClick={(e) => e.preventDefault()}
                 >
                   <Instagram size={20} />
                 </a>
                 
-                <a 
+                {/* <a 
                   href="https://twitter.com/EducationEcc?s=08" 
                   className="twitter" 
                   aria-label="Twitter"
                   onClick={(e) => e.preventDefault()}
                 >
                   <Twitter size={20} />
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
