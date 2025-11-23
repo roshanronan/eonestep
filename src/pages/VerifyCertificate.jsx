@@ -38,7 +38,7 @@ async function convertImagesToBase64(element) {
 
 
   const VerifyCertificate =()=> {
-  const {loading,setLoading } = useAuth();
+  const {loading,setLoading,session} = useAuth();
   const [errors, setErrors] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [studentData, setStudentData] = useState(null);
@@ -47,6 +47,8 @@ async function convertImagesToBase64(element) {
     enrollNo: '',
     rollNo: '',
   });
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -81,11 +83,12 @@ async function convertImagesToBase64(element) {
     }
 
     try {
-        setLoading(true);
+      setLoading(true);
      const response = await apiService.post('/students/certificate',payload)
      setLoading(false);
       // navigate("/certificate",{state:{studentData:response?.data?.student}})
      setStudentData(response?.data?.student)
+     console.log("student Data",response?.data?.student)
      setShowModal(true)
     } catch (error) {
       console.error('Fetch Result Failed:', error);
@@ -278,7 +281,7 @@ async function convertImagesToBase64(element) {
               <div className="login-form-section">
                 <div className="w-100">
                   <div className="welcome-text">Welcome to Certificate Verification</div>
-                  <div className="subtitle">Download Result EONESTEP</div>
+                  <div className="subtitle">Check Result EONESTEP</div>
                   
                   <div>
                     <div className="mb-3">
@@ -317,12 +320,67 @@ async function convertImagesToBase64(element) {
                     </button>
                   </div>
                 </div>
-                 <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+                {session?.user?.role != 'admin'?
+       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Certificate Ready</Modal.Title>
+            <Modal.Title>
+                Your Result
+            </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          The certificate for <b>{studentData?.studentName}</b> is ready.
+        <Modal.Body className='d-flex flex-column flex-md-row'>
+          <div className='col-10'>
+             <div style={{ lineHeight: '20px', color: 'rgb(48, 73, 99)' }}>
+          <div>This is Certify <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.studentName}</span></div>
+          <div>Fathers Name <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.fatherName}</span></div>
+          <div>Have Completed <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.courseName}</span></div>
+          <div>At <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.franchiseName} ({ studentData?.franchiseCity +", " + studentData?.franchiseState} Code E1STEP/{studentData?.franchiseCode})</span></div>
+          <div>With the following Subjects <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.subjects}</span></div>
+        </div>
+
+        <div style={{ marginBottom: '15px', color: 'rgb(48, 73, 99)' }}>
+          {studentData?.percentage && studentData?.percentage.trim() !== '' && (
+            <div>He has secured <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.percentage}%</span></div>
+          )}
+          <div>With <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.grade}</span> Grade</div>
+        </div>
+          </div>
+          <div className='col-2 d-flex justify-content-center align-items-start'>
+            <img src={studentData?.imageUpload} alt="Student Photo" style={{height:'90px'}}/>
+          </div>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Ok
+          </Button>
+        </Modal.Footer>
+      </Modal>:
+       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title >
+             Download Certificate
+            </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className='d-flex flex-column flex-md-row'>
+          <div className='col-10'>
+             <div style={{ lineHeight: '20px', color: 'rgb(48, 73, 99)' }}>
+          <div>This is Certify <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.studentName}</span></div>
+          <div>Fathers Name <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.fatherName}</span></div>
+          <div>Have Completed <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.courseName}</span></div>
+          <div>At <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.franchiseName} ({ studentData?.franchiseCity +", " + studentData?.franchiseState} Code E1STEP/{studentData?.franchiseCode})</span></div>
+          <div>With the following Subjects <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.subjects}</span></div>
+        </div>
+
+        <div style={{ marginBottom: '15px', color: 'rgb(48, 73, 99)' }}>
+          {studentData?.percentage && studentData?.percentage.trim() !== '' && (
+            <div>He has secured <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.percentage}%</span></div>
+          )}
+          <div>With <span style={{ color: 'black',fontWeight:'600' }}>{studentData?.grade}</span> Grade</div>
+        </div>
+          </div>
+          <div className='col-2 d-flex justify-content-center align-items-start'>
+            <img src={studentData?.imageUpload} alt="Student Photo" style={{height:'90px'}}/>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
@@ -332,12 +390,14 @@ async function convertImagesToBase64(element) {
             Download PDF
           </Button>
         </Modal.Footer>
+
       </Modal>
+
+      }
 
       <div style={{ display: "none" }}>
         <div id="certificate">
           <CertificatePDF studentDetails={studentData}/>
-          {/* your full certificate design */}
         </div>
       </div>
               </div>

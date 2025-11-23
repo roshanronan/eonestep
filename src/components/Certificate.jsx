@@ -145,7 +145,6 @@ const CertificatePDF = ({studentDetails}) => {
           <div>At <span style={{ color: 'black' }}>{studentDetails?.franchiseName} ({ studentDetails?.franchiseCity +", " + studentDetails?.franchiseState} Code E1STEP/{studentDetails?.franchiseCode})</span></div>
           <div>With the following Subjects <span style={{ color: 'black' }}>{studentDetails?.subjectName}</span></div>
         </div>
-
         {/* Performance Details */}
         <div style={{ marginBottom: '15px', color: 'rgb(48, 73, 99)' }}>
           {studentDetails?.percentage && studentDetails?.percentage.trim() !== '' && (
