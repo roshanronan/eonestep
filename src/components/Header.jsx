@@ -47,8 +47,8 @@ const Header = () => {
           </li>
           <li className="dropdown"><Link href=""><span>Student Zone   <ChevronDown size={20}  /></span></Link>
             <ul>
-              <li><Link href="">Student Verification</Link></li>
-              <li><Link href="">Student Login</Link></li>
+              <li><Link to="/check-result">Student Verification</Link></li>
+              {/* <li><Link href="">Student Login</Link></li> */}
              
             </ul>
           </li>
